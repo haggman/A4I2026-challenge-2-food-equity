@@ -9,7 +9,11 @@ not build the vehicle. The design decisions in your agent are what you'll be jud
 ## What has to be true of what you build here
 
 - **An ADK agent**, in Python.
-- **At least one custom Python tool.** The obvious one wraps your match query.
+- **At least one tool you built yourself.** A Python function tool, or one you defined in MCP
+  Toolbox — either counts. The obvious candidate wraps your match query, but the more valuable
+  one holds the logic that isn't a single query: composing the search string, applying the
+  constraint filter, assembling the Match Brief. Consuming only prebuilt generic tools and
+  calling that your design does not count.
 - **At least one Google-managed MCP server, consumed.** Don't author your own—use BigQuery's
   built-in server or the [MCP Toolbox for Databases](https://github.com/googleapis/mcp-toolbox).
 - **Deployed to Google Cloud**—Agent Runtime or Cloud Run, your choice.

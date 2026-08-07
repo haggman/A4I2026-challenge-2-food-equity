@@ -235,6 +235,7 @@ Every team, every challenge, uses the same core stack:
 | **Gemini** | The reasoning model—interpreting a messy posting, weighing two viable recipients, drafting the outreach |
 | **BigQuery** | All the data lives here, and your agent queries it |
 | **A managed MCP server** | Consume at least one—don't author your own. See below |
+| **At least one tool you built** | A Python function tool, or a tool you defined yourself in MCP Toolbox. See below |
 | **Deployed to Google Cloud** | Agent Runtime or Cloud Run, your choice. It has to actually run somewhere |
 
 **Also already installed and worth ten seconds of your attention now rather than later: the
@@ -255,6 +256,19 @@ to your own tools rather than generic queries, start there.
 > **Hint worth taking:** run the Toolbox as a container on **Cloud Run with minimum instances
 > set to 1**. Cloud Run scales to zero by default, so the first request after an idle period
 > pays a cold start—and the first request after an idle period is the one you make on stage.
+
+### What "a tool you built" means, and why we ask
+
+You could, in principle, do the entire semantic search through MCP Toolbox — it lets you define
+a tool as parameterised SQL, so the `VECTOR_SEARCH` itself can be a Toolbox tool with no Python
+at all. That's a legitimate design and we're not going to pretend otherwise.
+
+**The requirement is one tool you designed, in either form.** What we're actually looking for is
+the work that *isn't* a single query: turning a messy posting into a good search string, applying
+constraint logic with judgment in it, assembling the Match Brief, drafting the outreach. That
+tends to want Python. But if you can express it in Toolbox and defend the choice, that counts.
+
+What doesn't count is consuming only prebuilt generic tools and calling that your design.
 
 ### And one required differentiator: **BigQuery vector search**
 
