@@ -38,7 +38,8 @@ Start here. These are tested end to end:
 
 | Metro | Notes |
 |---|---|
-| **Seattle** | The notebook default. Also has **real** published operational profiles you can compare against |
+| **Dallas** | The notebook default |
+| **Seattle** | Has **real** published operational profiles you can compare our generated ones against |
 | **Philadelphia** | Also has real published operational profiles |
 | **Atlanta** | |
 | **Chicago** | |
@@ -467,7 +468,7 @@ on **real** published profiles from Seattle/King County and Pennsylvania (both p
 and generation seeded from each organization's tax ID so the same organization always produces
 the same profile for every team.
 
-**The clock is real.** USDA FSIS **FoodKeeper**, CC0—661 products with shelf life by storage
+**The clock is real.** USDA FSIS **FoodKeeper**, CC0, pinned in `data/`—661 products with shelf life by storage
 state. Worth knowing its limits: it's consumer home-storage guidance for freshness and quality,
 not a commercial cold-chain model. Right order of magnitude, wrong instrument for a guarantee.
 
@@ -557,8 +558,16 @@ notebooks/01_load_explore.ipynb   The main artifact. Run this first.
 scripts/load.sh                   Headless fallback if Colab is unavailable.
 data/profile_components.json      The vocabulary banks used to generate profiles.
                                   Read it—you should be able to inspect generated data.
+data/foodkeeper.json              USDA shelf-life data (CC0), pinned. See below.
 agent/                            Empty. Your agent goes here.
 ```
+
+**Why `foodkeeper.json` is committed rather than downloaded:** both USDA hosts return the file
+happily in a browser and `403 Forbidden` to a notebook, because federal sites reject datacenter
+IP ranges and every Colab runtime lives in one. The file is public domain and has not changed
+since 2018, so pinning it removes an event-day dependency on a server that can decide it does
+not like us. Worth remembering if you go looking for your own government data today: *"the data
+is public"* and *"I can fetch it from my code"* are different claims.
 
 `agent/` is empty on purpose. We built the on-ramp—real organizations, an honest corpus, a
 clock, a need signal, and validation. We didn't build the vehicle. The design decisions in your

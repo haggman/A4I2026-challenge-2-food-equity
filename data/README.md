@@ -19,6 +19,22 @@ we deliberately put in your corpus, and each one carries a `why`.
 
 This file is ROI Training's own work and carries no restrictions.
 
+## `foodkeeper.json`
+
+USDA FSIS FoodKeeper shelf-life data—661 products, **CC0 public domain**. Source of record is
+`https://www.foodsafety.gov/sites/default/files/foodkeeper_data_url_en.json`.
+
+It is committed rather than downloaded because both USDA hosts return `403 Forbidden` to
+requests from datacenter IP ranges, which is where every Colab runtime lives. The file has not
+changed since 2018. The notebook still tries the live source first, so if USDA ever relaxes,
+you will see it say so.
+
+Note this is **consumer home-storage guidance for freshness and quality**, developed with
+Cornell and the Food Marketing Institute. It is not a commercial cold-chain model—no
+temperature setpoints, no pathogen-growth curves, and the assumed refrigerator temperature is
+never stated. Right order of magnitude, wrong instrument for a guarantee. Say so if you use it
+in a claim.
+
 ## Everything else
 
 `.gitignore` excludes `*.csv` and `*.parquet` here. Data pulled by the notebook lives in

@@ -8,8 +8,8 @@
 # runtime is slow or unavailable, or when irs.gov is not cooperating.
 #
 # Run it from the repo root in Cloud Shell (no chmod needed - invoke with bash):
-#     bash scripts/load.sh                # defaults to seattle
-#     bash scripts/load.sh philadelphia
+#     bash scripts/load.sh                # defaults to dallas
+#     bash scripts/load.sh seattle
 #     bash scripts/load.sh --list         # show available metros
 #
 # You still want the notebook if you can run it. It explains which half of the
@@ -42,7 +42,7 @@ trap on_interrupt INT TERM
 
 list_metros() {
   bold "Metros available in the snapshot"
-  if ! gsutil ls "${BUCKET}/" 2>/dev/null | sed 's|.*/\([^/]*\)/$|  \1|' | grep -v '^\s*$'; then
+  if ! gcloud storage ls "${BUCKET}/" 2>/dev/null | sed 's|.*/\([^/]*\)/$|  \1|' | grep -v '^\s*$'; then
     fail "Could not list ${BUCKET}/. Check that you have network access."
   fi
   echo
@@ -52,7 +52,7 @@ list_metros() {
 # --------------------------------------------------------------------------
 # Arguments
 # --------------------------------------------------------------------------
-METRO="${1:-seattle}"
+METRO="${1:-dallas}"
 
 if [[ "${METRO}" == "--list" || "${METRO}" == "-l" ]]; then
   list_metros
@@ -74,7 +74,7 @@ bold "A4I Challenge 2 - loading data for: ${METRO}"
 echo
 
 command -v bq     >/dev/null 2>&1 || fail "'bq' not found. Run this in Cloud Shell."
-command -v gsutil >/dev/null 2>&1 || fail "'gsutil' not found. Run this in Cloud Shell."
+command -v gcloud >/dev/null 2>&1 || fail "'gcloud' not found. Run this in Cloud Shell."
 
 PROJECT_ID="$(gcloud config get-value project 2>/dev/null || true)"
 [[ -n "${PROJECT_ID}" && "${PROJECT_ID}" != "(unset)" ]] \
@@ -85,7 +85,7 @@ info "Source  : ${SRC}"
 info "Dataset : ${DATASET} (${LOCATION})"
 echo
 
-if ! gsutil ls "${SRC}/" >/dev/null 2>&1; then
+if ! gcloud storage ls "${SRC}/" >/dev/null 2>&1; then
   echo
   bold "No snapshot found for '${METRO}'."
   echo
@@ -123,7 +123,7 @@ bold "2/3  Loading tables"
 for table in "${TABLES[@]}"; do
   uri="${SRC}/${table}/*.parquet"
 
-  if ! gsutil ls "${SRC}/${table}/" >/dev/null 2>&1; then
+  if ! gcloud storage ls "${SRC}/${table}/" >/dev/null 2>&1; then
     fail "Missing ${SRC}/${table}/. The snapshot for '${METRO}' looks incomplete - tell a coach."
   fi
 
