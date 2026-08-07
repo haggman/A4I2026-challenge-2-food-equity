@@ -36,16 +36,23 @@ You do **not** have to pick the city you're sitting in.
 
 Start here. These are tested end to end:
 
-| Metro | Notes |
-|---|---|
-| **Dallas** | The notebook default |
-| **Seattle** | Has **real** published operational profiles you can compare our generated ones against |
-| **Philadelphia** | Also has real published operational profiles |
-| **Atlanta** | |
-| **Chicago** | |
-| **Houston** | Largest organization count |
-| **Denver** | |
-| **New York** | |
+| Metro | Organizations | Households with no vehicle | Notes |
+|---|---:|---:|---|
+| **Chicago** | 183 | 22% | The notebook default |
+| **Dallas** | 173 | 6% | |
+| **Atlanta** | 126 | 15% | |
+| **Seattle** | 114 | 7% | Has **real** published operational profiles you can compare our generated ones against |
+| **Philadelphia** | — | — | Also has real published operational profiles |
+| **Houston** | — | — | |
+| **Denver** | — | — | |
+| **New York** | — | — | Highest no-vehicle rates in the country |
+
+That second column is worth a look before you choose. Vehicle access is what makes food
+access different from plain poverty—if the nearest full grocery store is three miles away,
+having no car is the thing that turns a low income into a food desert. In a car-dependent
+metro almost everybody drives, so that variable barely separates one neighbourhood from
+another and your equity audit collapses into "is this area poor." Pick a metro where the
+number has some spread and the audit has something real to find.
 
 Any US metro will work if you add its bounding box to the notebook—the data is national. We've
 tested these seven.
@@ -442,7 +449,7 @@ Four tables in your project, in a dataset called `a4i_food`:
 
 | Table | What it is |
 |---|---|
-| `recipients` | ~500 organizations with profiles, storage, capacity, and pickup constraints |
+| `recipients` | Every food-capable organization in your metro—typically 150–400—with profiles, storage, capacity, and pickup constraints |
 | `surplus_postings` | Ten surplus offers across the three tracks—your query side |
 | `shelf_life` | USDA shelf life for 661 products, in hours |
 | `tract_demographics` | Poverty, vehicle access, and assistance rates by census tract |
