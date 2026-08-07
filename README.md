@@ -49,13 +49,17 @@ Start here. These are tested end to end:
 
 That second column is worth a look before you choose. Vehicle access is what makes food
 access different from plain poverty—if the nearest full grocery store is three miles away,
-having no car is the thing that turns a low income into a food desert. In a car-dependent
+having no car is what turns a tight budget into an empty refrigerator. In a car-dependent
 metro almost everybody drives, so that variable barely separates one neighbourhood from
 another and your equity audit collapses into "is this area poor." Pick a metro where the
 number has some spread and the audit has something real to find.
 
-Any US metro will work if you add its bounding box to the notebook—the data is national. The
-eight above are the ones we've run end to end; the four with numbers are the ones we've measured.
+The eight above are the ones we've run end to end; the four with numbers are the ones we've
+measured. **Any US city will work**—the data is national. If you want one that isn't listed,
+**Appendix B of the notebook** derives its bounding box for you and then tells you whether the
+city is worth building on: how many organizations you'd get, and whether the need signals have
+enough spread for your equity audit to find anything. It will tell you plainly if a city is a
+bad choice, which is cheaper to learn now than at hour three.
 
 > **Why US only?** Our socioeconomic layer is the American Community Survey, and the Canadian
 > census has no equivalent vehicle-access variable. Toronto teams should pick a US metro and
@@ -75,13 +79,31 @@ That's your scenario. Write it down. Everything you build should answer to it.
 
 ---
 
+## The four things you're working with
+
+Small vocabulary, used consistently everywhere from here on. Worth thirty seconds now.
+
+| Term | What it means |
+|---|---|
+| **Posting** | One offer of surplus, as a donor would actually type it: *"10 crates of spinach, harvested yesterday, needs cold storage."* Messy, free text, on a clock. This is the **query** side |
+| **Recipient** | An organization that could receive it—a pantry, shelter, soup kitchen, clinic, diaper bank. Each has a written **profile** describing what it serves and what it can physically handle. These are the **corpus** you search |
+| **Match** | A posting paired with a recipient, plus the reasoning: why them, what they can take, whether they can collect in time, and the message to send |
+| **Track** | Which *kind* of surplus you specialise in. Changes the shape of the postings, not the machinery |
+
+The whole challenge is: **posting in, ranked matches out, with a defensible reason attached.**
+
+---
+
 ## Three tracks, one architecture
 
 Every team building this challenge shares the same spine: one corpus of recipient
 organizations, one embedding pass, one semantic search, one constraint filter, one drafted
 handoff. **What changes between tracks is the shape of the offer, not the machinery.**
 
-Pick a track, or handle all three if you're ambitious:
+**These are suggestions, not a menu you're confined to.** Pick one, combine two, or invent
+your own—if you can see a surplus-brokering problem in the same vein that these three miss, that
+is exactly the kind of judgment this challenge rewards. Just be ready to say why yours is worth
+solving.
 
 | Track | What arrives | Who can take it | What makes it hard |
 |---|---|---|---|
@@ -100,16 +122,22 @@ separate rulebook per track. A system that matches on meaning handles all three 
 **A broker.** Not a directory, and not a search box over a table of charities—an agent a
 coordinator can hand a problem to at 4pm on a Thursday and get an actionable answer from.
 
-Your coordinator isn't asking one question. Over an afternoon they might ask all of these:
+Your coordinator isn't asking one question. Picture a single afternoon:
+
+> **2:10pm, Thursday.** A grocer calls. They're pulling ten crates of spinach off the shelf—
+> harvested yesterday, still good, but it has to leave their dock by 8pm and it has to stay
+> cold the whole way. You have one afternoon and a group text full of volunteer drivers.
+
+Over the next two hours the same coordinator asks all of these:
 
 | What they ask | What answers it |
 |---|---|
-| *"Grocer has 10 crates of spinach, 6 hours. Who takes it?"* | Vector search over recipient profiles, filtered by storage |
-| *"Why them and not the food bank downtown?"* | The profile text that drove the match, plus the constraints that eliminated others |
+| *"Who can take ten crates of spinach and collect it before 8 tonight?"* | Vector search over recipient profiles, then filtered by storage and pickup window |
+| *"Why them and not the big food bank downtown?"* | The profile text that drove the match, plus the constraints that eliminated everyone else |
 | *"They said no. Who's next?"* | The ranked list below the top hit—which is why you return more than one |
-| *"How long does this actually have?"* | USDA shelf life, against the donor's stated window |
-| *"Can they physically collect it, or do we need a driver?"* | `refrigerated_transport`, `pickup_window_hours`, `service_days` |
-| *"Whose neighbourhood does this help?"* | Census tract demographics for the recipient's location |
+| *"How long does spinach actually last once it leaves the store?"* | USDA shelf life, capped by the donor's own deadline |
+| *"Can they collect it themselves, or do I need to send a driver?"* | `refrigerated_transport`, `pickup_window_hours`, `service_days` |
+| *"Whose neighbourhood does this actually help?"* | Census tract demographics for the recipient's location |
 | *"Write the message. I'll send it."* | Gemini, synthesising everything above |
 
 Notice these need **different things**. Some need the semantic search. Some need only a filter.
@@ -130,7 +158,7 @@ separates a team.
 | *"Plan the whole route for one van, five pickups"* | Multi-stop optimisation. A genuinely hard and genuinely impressive add-on |
 | *"Is this product under recall?"* | [openFDA food enforcement API](https://open.fda.gov/apis/food/enforcement/)—CC0, and an agent that checks before brokering is a real safety feature |
 | *"Has this recipient taken from us before?"* | Any persistence layer. Firestore is a natural fit and nothing in our stack covers it |
-| *"Don't let two drivers claim the same pallet"* | Reservation state. BigQuery is the wrong tool; this is where Firestore earns its place |
+| *"Don't let two drivers claim the same pallet"* | Reservation state, which needs a transactional database—Firestore, AlloyDB, Cloud SQL or Spanner. BigQuery is an analytics warehouse and is genuinely the wrong tool for a claim/lock |
 | *"Is this tract an official USDA food desert?"* | [USDA Food Access Research Atlas](https://www.ers.usda.gov/data-products/food-access-research-atlas/)—not in BigQuery, so you'd stage it yourself |
 
 ---
@@ -175,6 +203,12 @@ Every team, every challenge, uses the same core stack:
 | **BigQuery** | All the data lives here, and your agent queries it |
 | **A managed MCP server** | Consume at least one—don't author your own. See below |
 | **Deployed to Google Cloud** | Agent Runtime or Cloud Run, your choice. It has to actually run somewhere |
+
+**Also already installed and worth ten seconds of your attention now rather than later: the
+Antigravity CLI.** Type `agy` in Cloud Shell and you have a terminal coding agent that reads
+your repo, proposes edits, and runs commands. It is not required and nothing here depends on
+it, but every lane has tedious work it would happily absorb—ADK boilerplate, a Cloud Run deploy,
+SQL against tables you just loaded. [Details in Step 3](#optional-but-encouraged-the-antigravity-cli).
 
 ### Choosing your MCP server
 
@@ -285,9 +319,13 @@ think the user is.
 
 | Option | Strength | Trade-off |
 |---|---|---|
-| **Custom web UI** | Full control. A coordinator's queue with a clock ticking down beats a chat log | The most work by far. Scope it small |
+| **`adk web`** | Fastest. Built in. Works immediately, and it is where you should start | Obviously a developer tool. Fine while building, weak as a product story |
 | **Gemini Enterprise** | Polished, almost no front-end code. An agent on Agent Runtime can be surfaced through it | Serves **internal** users, not the public |
-| **`adk web`** | Fastest. Built in. Works immediately | Obviously a developer tool. Fine for a demo, weak as a product story |
+| **Custom web UI** | Full control. A coordinator's queue with a clock ticking down beats a chat log | The most work by far. Scope it small |
+
+**Everybody starts on `adk web`, and you should too**—it gets the agent lane unblocked in
+minutes. The question is whether you *finish* there. Shipping `adk web` as your demo is a
+choice you'll have to defend, and "it was already there" is the weakest version of that answer.
 
 The Gemini Enterprise trade-off is worth thinking about rather than working around. Your user
 *is* an internal one—a food-rescue coordinator at an organization, not a member of the public.
@@ -382,6 +420,18 @@ New to any of this? Both open in a new tab:
 
 One thing worth knowing: your `$HOME` directory persists between sessions. Anything outside it
 does not—so keep your work in the cloned repo.
+
+**One repo, one branch per lane.** You're four lanes working in parallel in a single repository,
+and if everyone commits to `main` you will spend part of your afternoon resolving conflicts
+instead of building. Agree on this in Step 0 and it costs nothing:
+
+```bash
+git checkout -b agent      # or data, frontend, story
+```
+
+Merge to `main` when a lane has something the others need—the agent lane's endpoint, the data
+lane's match query. Nobody needs a separate repository, and eight forks is the failure mode this
+avoids.
 
 #### Optional but encouraged: the Antigravity CLI
 
