@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Credentials - never commit these
+*.json.key
+service-account*.json
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local data
+*.parquet
+*.csv.gz
