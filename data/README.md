@@ -1,8 +1,26 @@
 # data/
 
-Seed and reference data that ships with this challenge.
+## `profile_components.json`
 
-Anything the load notebook pulls from a live public source goes into **BigQuery in your own
-project**, not here. This folder is only for small files we generate or stage in advance.
+The archetype definitions and vocabulary banks the notebook uses to generate the operational
+half of each recipient profile.
 
-If it's empty apart from this note, everything you need comes from the notebook.
+**Read it.** You should not trust generated data you cannot inspect, and neither should a
+judge. Everything the generator can say about an organization is in this file: fourteen
+archetypes, their storage and transport characteristics, and the phrasings they draw from.
+
+The phrasing is modelled on real published operational profiles from Seattle/King County
+(Public Domain) and Pennsylvania (US Government Works). The organizations themselves are real
+and come from the IRS Exempt Organizations Business Master File at notebook runtime—they are
+not in this file.
+
+The `planted_cases` block at the bottom is worth particular attention. Those are the hard cases
+we deliberately put in your corpus, and each one carries a `why`.
+
+This file is ROI Training's own work and carries no restrictions.
+
+## Everything else
+
+`.gitignore` excludes `*.csv` and `*.parquet` here. Data pulled by the notebook lives in
+BigQuery, not in the repo—so this folder stays small and the repo stays cloneable on
+conference wifi.

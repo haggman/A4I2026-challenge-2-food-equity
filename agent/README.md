@@ -2,12 +2,26 @@
 
 This folder is empty on purpose.
 
-Everything else in this repository exists so that you don't spend your morning on setup:
-the data is sourced, the licensing is checked, the load process is written, and the
-exploration queries are ready to run. That is the on-ramp.
+We built the on-ramp: real organizations, an honest recipient corpus, a shelf-life clock, a
+need signal, and a validation suite that tells you plainly whether any of it is wrong. We did
+not build the vehicle. The design decisions in your agent are what you'll be judged on.
 
-The agent is the part that's actually yours. We haven't written a scaffold, a starter
-class, or a "fill in the blanks" template, because the design decisions you make here are
-what you'll be judged on and what you'll demo.
+## What has to be true of what you build here
 
-Build it however your team works best. Delete this file when you do.
+- **An ADK agent**, in Python.
+- **At least one custom Python tool.** The obvious one wraps your match query.
+- **At least one Google-managed MCP server, consumed.** Don't author your own—use BigQuery's
+  built-in server or the [MCP Toolbox for Databases](https://github.com/googleapis/mcp-toolbox).
+- **Deployed to Google Cloud**—Agent Runtime or Cloud Run, your choice.
+- **Your required differentiator: BigQuery vector search.** Your agent must genuinely *call*
+  the semantic search. Filtering on categories or `LIKE '%spinach%'` does not count, and it is
+  the most common way a team misses the point while appearing to hit it.
+
+## The thing worth remembering while you build
+
+Vector search is a **candidate generator, not an answer**. There is at least one organization
+in your corpus that semantically looks like a perfect match and physically cannot store the
+food. What you do *after* the search—storage compatibility, pallet capacity, the pickup window
+against the clock—is where this agent becomes useful instead of merely clever.
+
+See the README for the four syntax traps, and Section 14 of the notebook for the query shape.
