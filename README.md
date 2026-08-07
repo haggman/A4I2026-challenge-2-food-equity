@@ -160,6 +160,39 @@ separates a team.
 | *"Has this recipient taken from us before?"* | Any persistence layer. Firestore is a natural fit and nothing in our stack covers it |
 | *"Don't let two drivers claim the same pallet"* | Reservation state, which needs a transactional database—Firestore, AlloyDB, Cloud SQL or Spanner. BigQuery is an analytics warehouse and is genuinely the wrong tool for a claim/lock |
 | *"Is this tract an official USDA food desert?"* | [USDA Food Access Research Atlas](https://www.ers.usda.gov/data-products/food-access-research-atlas/)—not in BigQuery, so you'd stage it yourself |
+| *"A new pantry wants to join. Who writes their profile?"* | Nobody, today. See below—this is the most interesting add-on available |
+
+### The add-on we'd build if we had another four hours
+
+Read the data section below and you'll find us admitting something: **the operational half of
+every recipient profile is generated, because that information is not public for any pantry in
+the United States.** Not hidden—simply never collected. A pantry knows whether it has a walk-in
+cooler. Nobody has ever asked all of them at once.
+
+So build the thing that asks.
+
+**An intake agent.** A coordinator at a new pantry talks to it, and it produces the structured
+profile your matcher needs. Not a form—a conversation. Because a form gets you *"large fridge,"*
+and an agent hears *"we've got a fridge and a chest freezer out back"* and asks the follow-up
+that actually matters: **can you take a pallet, or does it need to come in by hand?** That
+single distinction decides half the matches in this challenge, and no dropdown will ever
+capture it.
+
+Why this is worth your time rather than just worthy:
+
+- **It closes the loop on our stated limitation.** We told you the data doesn't exist. You went
+  and got it. That is a genuinely strong thing to say in a demo.
+- **Its output feeds your differentiator directly.** The agent writes `profile_text`. Embed it
+  and the new organization is searchable immediately—a pantry can register and receive a match
+  in the same demo. That's a complete loop, and it's a much better closing beat than a table.
+- **It is cheaper than it looks.** Intake is a handful of writes a day with nobody competing
+  for the same row, so appending to BigQuery is fine. **Don't confuse this with the reservation
+  problem**—two drivers claiming the same pallet in the same second is what needs a
+  transactional database. Registering a pantry is not.
+
+A lighter variant if you're short on time: point the agent at an organization's existing
+website and have it draft the profile for a human to confirm. Same idea, far less typing, and
+it scales to the whole city.
 
 ---
 
