@@ -54,8 +54,8 @@ metro almost everybody drives, so that variable barely separates one neighbourho
 another and your equity audit collapses into "is this area poor." Pick a metro where the
 number has some spread and the audit has something real to find.
 
-Any US metro will work if you add its bounding box to the notebook—the data is national. We've
-tested these seven.
+Any US metro will work if you add its bounding box to the notebook—the data is national. The
+eight above are the ones we've run end to end; the four with numbers are the ones we've measured.
 
 > **Why US only?** Our socioeconomic layer is the American Community Survey, and the Canadian
 > census has no equivalent vehicle-access variable. Toronto teams should pick a US metro and
@@ -149,6 +149,10 @@ Spend fifteen minutes deciding what *your* version does that nobody else's will:
   agent that proposes a three-way split with three drafted messages is doing something real.
 - **Make the clock visible.** A match that arrives with "this has 6 hours left, they can
   collect in 2, here's your margin" is a different product from one that returns a name.
+- **Break ties on something defensible.** Two recipients will often be equally viable. You have
+  `reported_income` (real), `weekly_households`, and the need profile of the tract they sit in.
+  Picking one deliberately and being able to say why beats returning whichever the search
+  happened to rank first.
 - **Take the equity audit seriously** instead of as a footnote. It's the most interesting
   conversation available in this challenge and most teams will skip it.
   ([What that means, concretely](#what-auditing-the-outcome-actually-means).)
@@ -431,12 +435,17 @@ them—which half of the recipient data is real—is something judges will ask y
 **If the notebook won't run**, there's a headless fallback. From the repo root in Cloud Shell:
 
 ```bash
-bash scripts/load.sh seattle
+bash scripts/load.sh chicago
 ```
 
 ```bash
 bash scripts/load.sh --list       # every metro we've published
 ```
+
+**One asymmetry worth knowing.** The notebook builds your data live, so it works for *any*
+metro. The fallback loads a pre-built snapshot, so it only covers the metros we published in
+advance—run `--list` to see them. If your metro isn't there and the notebook won't run, tell a
+coach rather than switching cities to suit the tooling.
 
 Invoke it with `bash` rather than `./scripts/load.sh`—that way it doesn't matter whether the
 file arrived with its executable bit set.
@@ -449,7 +458,7 @@ Four tables in your project, in a dataset called `a4i_food`:
 
 | Table | What it is |
 |---|---|
-| `recipients` | Every food-capable organization in your metro—typically 150–400—with profiles, storage, capacity, and pickup constraints |
+| `recipients` | Every food-capable organization in your metro—typically 150–400—with profiles, storage, capacity, pickup constraints, and each organization's **real reported revenue** |
 | `surplus_postings` | Ten surplus offers across the three tracks—your query side |
 | `shelf_life` | USDA shelf life for 661 products, in hours |
 | `tract_demographics` | Poverty, vehicle access, and assistance rates by census tract |
@@ -464,7 +473,7 @@ Four tables in your project, in a dataset called `a4i_food`:
 File**—1.98 million tax-exempt organizations, published monthly by the federal government, in
 the public domain under 17 U.S.C. § 105. We filter to the NTEE codes that identify food banks,
 pantries, soup kitchens, nutrition sites, shelters, and community clinics. Real names, real
-addresses, real classification.
+addresses, real classification, and each organization's **real reported annual revenue**.
 
 **The operational details are generated, and they had to be.** Whether a pantry has a walk-in
 cooler, how many pallets they can take, when they can collect—**none of that is public for any
@@ -472,7 +481,15 @@ organization in the United States.** It isn't hidden; nobody has ever collected 
 
 So we generate it, and the notebook shows you exactly how: fourteen archetypes, phrasing modelled
 on **real** published profiles from Seattle/King County and Pennsylvania (both public domain),
-and generation seeded from each organization's tax ID so the same organization always produces
+Their reported revenue does real work here rather than just sitting in a column: it places each
+organization inside its archetype's range, so a regional operation and a storefront pantry come
+out at genuinely different scales instead of drawing from the same dice. Roughly a third of them
+report a figure—the rest file a postcard return that carries none, which we treat as *unknown*
+rather than as *small*, because those are different things.
+
+The rest is generated, and the notebook shows you exactly how: fourteen archetypes, phrasing
+modelled on **real** published profiles from Seattle/King County and Pennsylvania (both public
+domain), and generation seeded from each organization's tax ID so the same organization always produces
 the same profile for every team.
 
 **The clock is real.** USDA FSIS **FoodKeeper**, CC0, pinned in `data/`—661 products with shelf life by storage
