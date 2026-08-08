@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # A4I 2026 - Challenge 2: Resilient Food Equity & Surplus Broker
-# Headless fallback for notebooks/01_load_explore.ipynb
+# Headless fallback for notebooks/c2_01_load_explore.ipynb
 #
 # Rebuilds the same four BigQuery tables the notebook produces, from a
 # pre-staged snapshot in Cloud Storage. Use this when a Colab Enterprise
@@ -97,10 +97,23 @@ fi
 # Create the dataset
 # --------------------------------------------------------------------------
 bold "1/3  Creating dataset"
-if bq --project_id="${PROJECT_ID}" ls -d "${DATASET}" >/dev/null 2>&1; then
+
+# `bq ls -d NAME` does NOT ask "does this dataset exist". It lists the datasets
+# inside a PROJECT called NAME, so it reports nothing for a dataset name and the
+# script falls through to `mk`, which then dies on a dataset that is already
+# there. That never shows up on a first run - it only bites on the second, which
+# is exactly when you are re-running because something went wrong the first time.
+# `show --dataset` with a fully qualified name is the question we actually mean.
+dataset_exists() {
+  bq --project_id="${PROJECT_ID}" show --dataset --format=none \
+     "${PROJECT_ID}:${DATASET}" >/dev/null 2>&1
+}
+
+if dataset_exists; then
   info "${DATASET} already exists - reusing it"
 
-  existing_loc="$(bq --project_id="${PROJECT_ID}" --format=json show -d "${DATASET}" 2>/dev/null \
+  existing_loc="$(bq --project_id="${PROJECT_ID}" --format=json show --dataset \
+                     "${PROJECT_ID}:${DATASET}" 2>/dev/null \
                   | tr ',' '\n' | grep -i '"location"' | head -1 \
                   | sed 's/.*: *"\([^"]*\)".*/\1/' || true)"
   if [[ -n "${existing_loc}" && "${existing_loc^^}" != "${LOCATION^^}" ]]; then
@@ -110,8 +123,18 @@ if bq --project_id="${PROJECT_ID}" ls -d "${DATASET}" >/dev/null 2>&1; then
        (bq rm -r -d ${DATASET}) or edit LOCATION at the top of this script to match."
   fi
 else
-  bq --project_id="${PROJECT_ID}" --location="${LOCATION}" mk -d "${DATASET}"
-  info "created ${DATASET}"
+  # Belt and braces. If the check above ever misfires, or two teammates run this
+  # in the same shared project at the same second, "already exists" is a fine
+  # outcome and not an error. Anything else is.
+  if mk_out="$(bq --project_id="${PROJECT_ID}" --location="${LOCATION}" \
+                  mk --dataset "${PROJECT_ID}:${DATASET}" 2>&1)"; then
+    info "created ${DATASET}"
+  elif grep -qi "already exists" <<<"${mk_out}"; then
+    info "${DATASET} already exists - reusing it"
+  else
+    fail "Could not create dataset ${DATASET}:
+       ${mk_out}"
+  fi
 fi
 echo
 

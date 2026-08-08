@@ -2,7 +2,7 @@
 
 ## `load.sh`
 
-A headless fallback that reaches the same end state as `notebooks/01_load_explore.ipynb`,
+A headless fallback that reaches the same end state as `notebooks/c2_01_load_explore.ipynb`,
 rebuilding all four BigQuery tables from a pre-staged snapshot in Cloud Storage.
 
 ```bash

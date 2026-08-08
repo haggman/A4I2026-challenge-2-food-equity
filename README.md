@@ -349,7 +349,8 @@ everything between raw tables and a match query the agent can call:
   teach the agent who it's talking to, when to reach for which tool, what to do with a vague
   posting, and—importantly—**when to refuse.** An agent that confidently recommends a recipient
   who can't store the food is worse than one that says "nobody in range can take this."
-- **Custom Python tools.** At least one is required. The obvious one wraps the vector search.
+- **At least one tool you built.** Required. The obvious one wraps the vector search. Python
+  function tool or your own MCP Toolbox definition—both count, see above.
 - **Decide what goes through MCP and what needs a custom tool.** Generic "query my tables" fits
   the managed MCP server. The match query, with its filters and ranking, usually wants a
   purpose-built tool. **This is your main coordination point with the data lane.**
@@ -518,7 +519,7 @@ its own. Review before you accept—it's fast, which is exactly why it's worth r
 3. **My Notebooks** → **Import** → source **URL**, and paste this:
 
    ```
-   https://raw.githubusercontent.com/haggman/A4I2026-challenge-2-food-equity/main/notebooks/01_load_explore.ipynb
+   https://raw.githubusercontent.com/haggman/A4I2026-challenge-2-food-equity/main/notebooks/c2_01_load_explore.ipynb
    ```
 
    *(If your team modifies the notebook later, get your own copy's raw URL by opening the file
@@ -675,12 +676,12 @@ emails to them.
 ## What's in this repository
 
 ```
-notebooks/01_load_explore.ipynb   The main artifact. Run this first.
-scripts/load.sh                   Headless fallback if Colab is unavailable.
-data/profile_components.json      The vocabulary banks used to generate profiles.
-                                  Read it—you should be able to inspect generated data.
-data/foodkeeper.json              USDA shelf-life data (CC0), pinned. See below.
-agent/                            Empty. Your agent goes here.
+notebooks/c2_01_load_explore.ipynb   The main artifact. Run this first.
+scripts/load.sh                      Headless fallback if Colab is unavailable.
+data/profile_components.json         The vocabulary banks used to generate profiles.
+                                     Read it—you should be able to inspect generated data.
+data/foodkeeper.json                 USDA shelf-life data (CC0), pinned. See below.
+agent/                               Empty. Your agent goes here.
 ```
 
 **Why `foodkeeper.json` is committed rather than downloaded:** both USDA hosts return the file
