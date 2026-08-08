@@ -38,28 +38,50 @@ Start here. These are tested end to end:
 
 | Metro | Organizations | Households with no vehicle | Notes |
 |---|---:|---:|---|
-| **Chicago** | 183 | 22% | The notebook default |
-| **Dallas** | 173 | 6% | |
-| **Atlanta** | 126 | 15% | |
+| **New York** | 363 | 45% | Highest no-vehicle rate in the country. Also the biggest: 363 organizations and 2,565 tracts, so every step takes longer |
+| **Philadelphia** | 106 | 22% | Also has real published operational profiles |
+| **Chicago** | 183 | 20% | The notebook default |
+| **Atlanta** | 126 | 13% | |
 | **Seattle** | 114 | 7% | Has **real** published operational profiles you can compare our generated ones against |
-| **Philadelphia** | — | — | Also has real published operational profiles |
-| **Houston** | — | — | |
-| **Denver** | — | — | |
-| **New York** | — | — | Highest no-vehicle rates in the country |
+| **Dallas** | 173 | 6% | |
+| **Houston** | 215 | 6% | Second-largest corpus |
+| **Phoenix** | 114 | 6% | |
+| **Denver** | 106 | 5% | Thinnest corpus of the nine, and the flattest vehicle-access signal |
 
-That second column is worth a look before you choose. Vehicle access is what makes food
-access different from plain poverty—if the nearest full grocery store is three miles away,
-having no car is what turns a tight budget into an empty refrigerator. In a car-dependent
-metro almost everybody drives, so that variable barely separates one neighbourhood from
-another and your equity audit collapses into "is this area poor." Pick a metro where the
-number has some spread and the audit has something real to find.
+Sorted by that second column, because it is the one worth reading before you choose. Vehicle
+access is what makes food access different from plain poverty—if the nearest full grocery
+store is three miles away, having no car is what turns a tight budget into an empty
+refrigerator.
 
-The eight above are the ones we've run end to end; the four with numbers are the ones we've
-measured. **Any US city will work**—the data is national. If you want one that isn't listed,
-**Appendix B of the notebook** derives its bounding box for you and then tells you whether the
-city is worth building on: how many organizations you'd get, and whether the need signals have
-enough spread for your equity audit to find anything. It will tell you plainly if a city is a
-bad choice, which is cheaper to learn now than at hour three.
+Notice that the list splits into two groups rather than sliding smoothly. Four metros sit at
+20% and above; five sit at 13% and below, four of those clustered at 5–7%. In the second group
+almost everybody drives, so vehicle access barely separates one neighbourhood from another and
+your equity audit quietly collapses into "is this area poor"—which you could have measured with
+income alone. That does not make those metros wrong. It makes them a harder place to find
+something interesting, and worth knowing before hour three rather than after.
+
+**We left Denver on the list on purpose.** It is worst on both axes—106 organizations, the
+fewest of the nine, and 5% no-vehicle, the flattest signal—so it is the one metro here where
+the data will genuinely fight you. That is a legitimate thing to build on if you go in knowing
+it: with a smaller corpus your nine planted edge cases are about 8% of the search space rather
+than 3%, which makes them easier to find and harder to dismiss, and an equity audit that comes
+back with "this variable told us nothing here, and here is the evidence" is a better finding
+than one that got lucky. Pick it deliberately or not at all.
+
+One honest caveat about the column: it is the metro-wide rate, not the spread *within* the
+metro, and spread is what an audit actually needs. The two usually travel together—a metro at
+5% has almost nowhere with high numbers—but they are not the same thing.
+
+All nine were run end to end and measured on 2026-08-08 from the published snapshot. The
+no-vehicle figure is population-weighted across the metro's census tracts, so a 40-person tract
+does not count the same as a 6,000-person one.
+
+**Any US city will work**—the data is national. If you want one that isn't listed, **Appendix B
+of the notebook** derives its bounding box for you and then tells you whether the city is worth
+building on: how many organizations you'd get, and whether the need signals have enough spread
+for your equity audit to find anything—it reports that spread directly, which is the number the
+caveat above is about. It will tell you plainly if a city is a bad choice, which is cheaper to
+learn now than at hour three.
 
 > **Why US only?** Our socioeconomic layer is the American Community Survey, and the Canadian
 > census has no equivalent vehicle-access variable. Toronto teams should pick a US metro and
@@ -259,7 +281,7 @@ to your own tools rather than generic queries, start there.
 
 ### What "a tool you built" means, and why we ask
 
-You could, in principle, do the entire semantic search through MCP Toolbox — it lets you define
+You could, in principle, do the entire semantic search through MCP Toolbox—it lets you define
 a tool as parameterised SQL, so the `VECTOR_SEARCH` itself can be a Toolbox tool with no Python
 at all. That's a legitimate design and we're not going to pretend otherwise.
 
@@ -461,10 +483,10 @@ Antigravity CLI already installed. Nothing to set up on your laptop, no admin ri
    That opens your cloned folder as a workspace in the Cloud Shell Editor—the same as
    **File → Open Folder** in VS Code, which is essentially what the editor is.
 
-New to any of this? Both open in a new tab:
-<a href="https://cloud.google.com/shell/docs/using-cloud-shell" target="_blank" rel="noopener noreferrer">Using Cloud Shell</a>
+New to any of this?
+[Using Cloud Shell](https://cloud.google.com/shell/docs/using-cloud-shell)
 ·
-<a href="https://cloud.google.com/shell/docs/editor-overview" target="_blank" rel="noopener noreferrer">Cloud Shell Editor overview</a>
+[Cloud Shell Editor overview](https://cloud.google.com/shell/docs/editor-overview)
 
 One thing worth knowing: your `$HOME` directory persists between sessions. Anything outside it
 does not—so keep your work in the cloned repo.
@@ -504,9 +526,9 @@ Then talk to it in plain language. Where it tends to earn its keep here:
 `/diff` shows pending changes before you accept them, `/permissions` controls what it can do on
 its own. Review before you accept—it's fast, which is exactly why it's worth reading what it did.
 
-<a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener noreferrer">Docs</a>
+[Docs](https://antigravity.google/docs/cli/install)
 ·
-<a href="https://codelabs.developers.google.com/antigravity-cli-hands-on" target="_blank" rel="noopener noreferrer">Hands-on codelab</a>
+[Hands-on codelab](https://codelabs.developers.google.com/antigravity-cli-hands-on)
 
 ### Step 4—Load the data
 

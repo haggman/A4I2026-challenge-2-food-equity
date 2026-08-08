@@ -1,458 +1,895 @@
 {
   "_readme": "Vocabulary banks used by notebooks/c2_01_load_explore.ipynb to synthesize the operational half of each recipient profile. The ORGANIZATIONS are real (IRS Exempt Organizations Business Master File). Their operational attributes - cold storage, capacity, pickup windows, dietary constraints - are not public for any organization, so we generate them. Phrasing is modelled on real profile text published by Seattle/King County (Public Domain) and Pennsylvania (USGOV_WORKS). Generation is seeded from each organization's EIN, so the same organization always produces the same profile on every run and for every team. See notebook Section 8.",
   "_license": "This file is ROI Training's own work and carries no restrictions.",
-
   "archetypes": {
     "regional_foodbank": {
       "label": "Regional food bank with warehouse",
-      "ntee": ["K30", "K31"],
+      "ntee": [
+        "K30",
+        "K31"
+      ],
       "size_hint": "large",
       "cold_storage": "walk-in",
       "frozen": true,
       "dock": true,
       "refrigerated_transport": true,
-      "max_pallets": [8, 24],
-      "pickup_window_hours": [12, 48],
-      "weekly_households": [900, 4000],
+      "max_pallets": [
+        8,
+        24
+      ],
+      "pickup_window_hours": [
+        12,
+        48
+      ],
+      "weekly_households": [
+        900,
+        4000
+      ],
       "openers": [
         "Regional distribution hub serving {n} partner agencies across the county.",
         "County-wide food bank operating a {sqft} square foot warehouse.",
-        "Central warehouse and redistribution center for {n} member pantries."
+        "Central warehouse and redistribution center for {n} member pantries.",
+        "County-level food bank moving product to {n} partner sites every week.",
+        "Warehouse operation, {sqft} square feet, supplying pantries across the region.",
+        "Regional hub. We are the first call when a distributor has a full truckload to move.",
+        "Central warehouse and redistribution point for {n} member agencies.",
+        "Large-scale food bank with our own fleet and a full-time warehouse crew."
       ],
       "storage": [
         "Two walk-in coolers and a walk-in freezer. Loading dock with pallet jack and forklift.",
         "Walk-in cold storage plus freezer capacity. Dock-height receiving, forklift on site.",
-        "Refrigerated and frozen storage on site. Dock receiving; we can take full pallets."
+        "Refrigerated and frozen storage on site. Dock receiving; we can take full pallets.",
+        "Multiple walk-in coolers, a walk-in freezer, and racked dry storage.",
+        "Cooler and freezer capacity measured in pallets, not shelves.",
+        "Racked warehouse with temperature-controlled bays and a monitored freezer.",
+        "Walk-in cold and frozen space, plus ambient racking for several truckloads.",
+        "Refrigerated bays, a blast freezer, and dry racking to the ceiling."
       ],
       "logistics": [
         "We run our own refrigerated box truck and can collect within a few hours of a call.",
         "Refrigerated truck available weekdays for pickup anywhere in the county.",
-        "Own transport including a reefer van. Same-day collection is usually possible."
+        "Own transport including a reefer van. Same-day collection is usually possible.",
+        "Two docks with levellers. We can receive a full trailer without notice.",
+        "Our own refrigerated fleet collects across the region on a daily schedule.",
+        "Forklifts, pallet jacks, and a crew who can turn a truck in under an hour.",
+        "We collect rather than wait for delivery, and we can be on the road within the hour.",
+        "Dock-height receiving, and we can send a reefer for anything that needs the cold chain."
       ],
       "needs": [
         "Highest need is fresh produce and protein. We can absorb volume that smaller sites cannot.",
         "We take bulk. Produce, dairy, and frozen protein move fastest through our network.",
-        "Bulk perishables preferred. We break down pallets and redistribute to member sites."
+        "Bulk perishables preferred. We break down pallets and redistribute to member sites.",
+        "Volume is the point. Protein, dairy and fresh produce move fastest through us.",
+        "Full pallets and truckloads. Small mixed lots cost us more to handle than they are worth.",
+        "Fresh produce and protein above all - the categories our partners cannot source themselves.",
+        "We can take what nobody else can absorb, including single-item loads by the ton.",
+        "Anything at scale. Our constraint is rarely storage and usually driver hours."
       ]
     },
     "neighborhood_pantry": {
       "label": "Neighborhood pantry, limited storage",
-      "ntee": ["K31"],
+      "ntee": [
+        "K31"
+      ],
       "size_hint": "small",
       "cold_storage": "domestic",
       "frozen": false,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 1],
-      "pickup_window_hours": [2, 6],
-      "weekly_households": [40, 220],
+      "max_pallets": [
+        0,
+        1
+      ],
+      "pickup_window_hours": [
+        2,
+        6
+      ],
+      "weekly_households": [
+        40,
+        220
+      ],
       "openers": [
         "Small neighborhood pantry run by volunteers, serving about {h} households a week.",
         "Volunteer-run pantry operating out of a church basement.",
-        "Community pantry serving roughly {h} families each week from a single room."
+        "Community pantry serving roughly {h} families each week from a single room.",
+        "Storefront pantry open two afternoons a week, serving about {h} households.",
+        "Corner pantry run out of a converted shop unit by a handful of volunteers.",
+        "Small independent pantry, no paid staff, roughly {h} families a week.",
+        "Neighbourhood food closet operating from a community centre back room.",
+        "Volunteer pantry serving the immediate few blocks and not much further."
       ],
       "storage": [
-        "One household refrigerator and a chest freezer. No dock, no pallet handling.",
+        "One household refrigerator. No freezer, no dock, no pallet handling.",
         "We have a fridge and limited shelf space. Everything comes in through a side door.",
-        "Two domestic refrigerators. We cannot take pallets and have no forklift."
+        "Two domestic refrigerators. We cannot take pallets and have no forklift.",
+        "One domestic refrigerator and some shelving. That is the whole operation.",
+        "A single fridge behind the counter and whatever fits on the shelves.",
+        "Household refrigeration only, and it is usually already full.",
+        "Cold space is one under-counter fridge. Dry goods go on open shelving.",
+        "We have a refrigerator and a storeroom. Nothing that holds a pallet."
       ],
       "logistics": [
         "No vehicle. Someone would need to deliver, or we can send a volunteer with a car.",
         "Volunteers collect in personal vehicles, so small quantities only.",
-        "We can pick up in a minivan if it is under an hour away."
+        "We can pick up in a minivan if it is under an hour away.",
+        "Everything arrives at a street door and gets carried in by hand.",
+        "We have no way to collect. Anything we take has to come to us.",
+        "A volunteer can fetch a car load if we know a day ahead.",
+        "No loading area at all - deliveries block the street while we unload.",
+        "One of us can drive over in an estate car, but that is our whole capacity."
       ],
       "needs": [
         "Shelf-stable staples are easiest for us. Small quantities of fresh produce work if it moves fast.",
         "Canned goods, rice, pasta. We take fresh produce but only what we can hand out the same week.",
-        "Non-perishables preferred. We have taken fresh greens before but they spoil on us."
+        "Non-perishables preferred. We have taken fresh greens before but they spoil on us.",
+        "Tinned goods, dry staples, and small amounts of fresh food we can hand straight out.",
+        "Shelf-stable first. Fresh is welcome but only in quantities we can clear the same day.",
+        "Staples people can cook at home. We have had to throw away produce before.",
+        "Dry goods and household basics. Fresh produce works if it arrives the day we open.",
+        "Cupboard staples are the reliable ask. Anything perishable is a gamble for us."
       ]
     },
     "soup_kitchen": {
       "label": "Hot meal program, kitchen but little storage",
-      "ntee": ["K35", "K34"],
+      "ntee": [
+        "K35",
+        "K34"
+      ],
       "size_hint": "small",
       "cold_storage": "commercial",
       "frozen": false,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 2],
-      "pickup_window_hours": [4, 12],
-      "weekly_households": [150, 800],
+      "max_pallets": [
+        0,
+        2
+      ],
+      "pickup_window_hours": [
+        4,
+        12
+      ],
+      "weekly_households": [
+        150,
+        800
+      ],
       "openers": [
         "Hot meals served nightly, roughly {h} plates a week.",
         "Congregate meal program serving dinner six days a week.",
-        "Daily hot lunch service in a commercial kitchen."
+        "Daily hot lunch service in a commercial kitchen.",
+        "Hot meal service five days a week, roughly {h} covers a day.",
+        "Community kitchen serving a sit-down lunch to whoever arrives.",
+        "Daily meal programme cooking from scratch in a commercial kitchen.",
+        "We serve hot food, not groceries - about {h} meals across the week.",
+        "Meal centre with a working kitchen and a dining room that fills every day."
       ],
       "storage": [
         "Commercial kitchen with reach-in refrigeration. Very little dry storage.",
         "Full kitchen, two reach-in coolers, no freezer to speak of.",
-        "Working kitchen with limited cold hold. We cook what arrives rather than store it."
+        "Working kitchen with limited cold hold. We cook what arrives rather than store it.",
+        "Commercial kitchen refrigeration, sized for tomorrow's service and no further.",
+        "Reach-in coolers and prep space. Storage is measured in days, not weeks.",
+        "A proper kitchen, but the cold room is small and turns over constantly.",
+        "Catering-scale fridges. We buy and cook on a short cycle by design.",
+        "Kitchen-grade cold hold only. We have no bulk storage behind it."
       ],
       "logistics": [
         "Kitchen staff can collect in a cargo van during prep hours.",
         "We can send someone mid-morning before service starts.",
-        "Pickup has to happen before 2pm or after service ends."
+        "Pickup has to happen before 2pm or after service ends.",
+        "Kitchen staff can collect between services if it is close by.",
+        "We have no van. Delivery to the kitchen door is what works.",
+        "Someone can drive out mid-morning, but not during service.",
+        "Collection is possible before ten or after three, never in between.",
+        "No transport of our own, and the kitchen entrance is down a narrow alley."
       ],
       "needs": [
         "Fresh produce and protein in cook-ready quantities. We use it the same day.",
         "Ingredients we can cook immediately. Volume is fine if it goes straight in the pot.",
-        "Produce, protein, dairy. If it arrives in the morning we serve it that evening."
+        "Produce, protein, dairy. If it arrives in the morning we serve it that evening.",
+        "Ingredients we can cook with - vegetables, protein, anything that goes in a pot.",
+        "Bulk raw ingredients beat individually packed items every time here.",
+        "Fresh produce and meat. We have the skills and the pans, just not the budget.",
+        "Cookable volume. A crate of vegetables is worth more to us than a case of snacks.",
+        "Anything that becomes a meal. We can use trim and seconds most kitchens would reject."
       ]
     },
     "senior_meals": {
       "label": "Senior congregate and home-delivered meals",
-      "ntee": ["K34", "K36"],
+      "ntee": [
+        "K34",
+        "K36"
+      ],
       "size_hint": "medium",
       "cold_storage": "commercial",
       "frozen": true,
       "dock": false,
       "refrigerated_transport": true,
-      "max_pallets": [1, 4],
-      "pickup_window_hours": [8, 24],
-      "weekly_households": [120, 600],
+      "max_pallets": [
+        1,
+        4
+      ],
+      "pickup_window_hours": [
+        8,
+        24
+      ],
+      "weekly_households": [
+        120,
+        600
+      ],
       "openers": [
         "Congregate lunch and home-delivered meals for adults 60 and over.",
         "Senior nutrition program, dining site plus a delivery route.",
-        "Meals for older adults, served on site and delivered to homebound clients."
+        "Meals for older adults, served on site and delivered to homebound clients.",
+        "Congregate lunch programme plus a home delivery round five mornings a week.",
+        "Meals on wheels operation serving older adults across several neighbourhoods.",
+        "Senior nutrition programme running a dining room and a delivery route.",
+        "We cook, portion and deliver hot meals to homebound older adults daily.",
+        "Older adult meal service with an on-site dining room and a driver rota."
       ],
       "storage": [
         "Commercial refrigeration and a reach-in freezer sized for portioned meals.",
         "Kitchen cold storage plus freezer. Space is planned around our menu cycle.",
-        "Reach-in cooler and freezer. We portion and blast-chill for delivery."
+        "Reach-in cooler and freezer. We portion and blast-chill for delivery.",
+        "Commercial refrigeration and a walk-in freezer for portioned meals.",
+        "Kitchen cold storage plus freezer space for the delivery cycle.",
+        "Reach-in coolers, a freezer, and a chilling cabinet for portioning.",
+        "Refrigeration sized for batch cooking, with frozen holding for delivery days.",
+        "Commercial fridges and freezers, all of it in use by mid-morning."
       ],
       "logistics": [
         "Delivery vans run weekday mornings and can divert for a pickup.",
         "Our route vehicles are insulated and available after the morning run.",
-        "We can collect weekday afternoons once the delivery route is finished."
+        "We can collect weekday afternoons once the delivery route is finished.",
+        "Our delivery vans are insulated and free once the morning round is done.",
+        "Route vehicles hold temperature, so we can collect chilled goods after eleven.",
+        "We have drivers and cold transport, but only outside the delivery window.",
+        "Collection is straightforward for us provided it is not during the round.",
+        "Insulated transport is available in the afternoon when the vans come back."
       ],
       "needs": [
         "Low-sodium and soft-texture items are most useful. Fresh produce always welcome.",
         "Items that suit older adults - softer produce, dairy, lean protein.",
-        "We plan menus a cycle ahead, so predictable items help more than surprises."
+        "We plan menus a cycle ahead, so predictable items help more than surprises.",
+        "Low-sodium and soft-texture items are what our clients can actually eat.",
+        "Ingredients suited to older adults - low salt, easy to chew, easy to reheat.",
+        "Fresh produce and lean protein. Portion-friendly sizes help us most.",
+        "Anything that reheats well. Our clients eat what we deliver, not what we display.",
+        "Mild, soft, low-sodium. Highly spiced or very fibrous items go uneaten."
       ]
     },
     "shelter_kitchen": {
       "label": "Shelter with kitchen, minimal cold storage",
-      "ntee": ["L41"],
+      "ntee": [
+        "L41"
+      ],
       "size_hint": "medium",
       "cold_storage": "domestic",
       "frozen": false,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 2],
-      "pickup_window_hours": [3, 10],
-      "weekly_households": [60, 300],
+      "max_pallets": [
+        0,
+        2
+      ],
+      "pickup_window_hours": [
+        3,
+        10
+      ],
+      "weekly_households": [
+        60,
+        300
+      ],
       "openers": [
         "Emergency shelter providing three meals a day to residents.",
         "Overnight shelter with a kitchen; we feed everyone who stays.",
-        "Family shelter serving breakfast and dinner daily."
+        "Family shelter serving breakfast and dinner daily.",
+        "Residential shelter feeding everyone on site three times a day.",
+        "Transitional housing programme with a shared kitchen and a rota of cooks.",
+        "Night shelter providing an evening meal and breakfast to residents.",
+        "Crisis accommodation serving meals to whoever is staying that week.",
+        "Supported housing with a small kitchen and a full dining room every evening."
       ],
       "storage": [
         "Residential-scale refrigeration only. No freezer space beyond what we use daily.",
         "Two household fridges. Dry storage is a converted closet.",
-        "Limited cold hold. Anything perishable has to be used within a day or two."
+        "Limited cold hold. Anything perishable has to be used within a day or two.",
+        "Domestic-scale fridges and a pantry cupboard. Nothing more.",
+        "Two household refrigerators shared with residents. Space is tight.",
+        "Cold storage is a couple of ordinary fridges that are always full.",
+        "One large domestic fridge and some shelving in the corridor.",
+        "Refrigeration is household grade and it turns over within a day."
       ],
       "logistics": [
         "Staff can collect nearby in a passenger van when someone is free.",
         "No dedicated vehicle. Delivery is far easier for us than pickup.",
-        "We can arrange a pickup with a day of notice."
+        "We can arrange a pickup with a day of notice.",
+        "Staff can collect locally when the shift allows, which is not often.",
+        "We rely on delivery. Pulling a staff member off shift is not realistic.",
+        "A support worker could collect nearby with notice, but not at short notice.",
+        "Delivery to the door is far easier for us than any kind of pickup.",
+        "We have a minibus, but it is committed to resident appointments most days."
       ],
       "needs": [
         "Prepared and ready-to-eat foods help most. We are short on prep capacity, not appetite.",
         "Easy-to-serve items. Fresh produce is welcome if it is ready to use.",
-        "Ready-to-eat and shelf-stable. Our kitchen is small and always busy."
+        "Ready-to-eat and shelf-stable. Our kitchen is small and always busy.",
+        "Prepared and ready-to-eat food. Our prep capacity is the bottleneck, not demand.",
+        "Things that need heating and nothing else. The kitchen is small and always busy.",
+        "Ready meals, bread, fruit. Anything requiring real prep tends to sit.",
+        "Easy-to-serve items in quantity. We feed the same number every single night.",
+        "Simple, filling, low-prep. Fresh produce works if it is ready to eat."
       ]
     },
     "mobile_pantry": {
       "label": "Mobile pantry, refrigerated van",
-      "ntee": ["K30", "K31"],
+      "ntee": [
+        "K30",
+        "K31"
+      ],
       "size_hint": "medium",
       "cold_storage": "vehicle",
       "frozen": false,
       "dock": false,
       "refrigerated_transport": true,
-      "max_pallets": [2, 6],
-      "pickup_window_hours": [4, 12],
-      "weekly_households": [200, 900],
+      "max_pallets": [
+        2,
+        6
+      ],
+      "pickup_window_hours": [
+        4,
+        12
+      ],
+      "weekly_households": [
+        200,
+        900
+      ],
       "openers": [
         "Mobile pantry running scheduled stops at {n} sites each week.",
         "We bring the pantry to the neighborhood - {n} distribution stops weekly.",
-        "Mobile distribution serving neighborhoods without a fixed pantry."
+        "Mobile distribution serving neighborhoods without a fixed pantry.",
+        "Mobile distribution running {n} stops a week from a refrigerated van.",
+        "We do not have a building - we have a route and {n} regular stops.",
+        "Pop-up pantry serving {n} locations on a fixed weekly rota.",
+        "Van-based distribution reaching estates and car parks the fixed sites miss.",
+        "Mobile market bringing fresh food to {n} neighbourhoods a week."
       ],
       "storage": [
         "Refrigerated van is our storage. Nothing stays overnight.",
         "Cold chain lives in the truck. We load and distribute the same day.",
-        "Reefer van with pallet capacity, but no static warehouse."
+        "Reefer van with pallet capacity, but no static warehouse.",
+        "The van is the cold storage. Nothing stays overnight.",
+        "Chilled capacity travels with us; we hold nothing at base.",
+        "Refrigeration is in the vehicle only, and it empties every day.",
+        "Cold hold is the van's, sized for one route, not for stock.",
+        "We keep product cold in transit and distribute it before the round ends."
       ],
       "logistics": [
         "We are already on the road and can add a pickup to the route.",
         "Route flexibility is our strength - a same-day diversion is usually possible.",
-        "Truck runs Tuesday through Saturday and can collect en route."
+        "Truck runs Tuesday through Saturday and can collect en route.",
+        "We are on the road anyway, so an extra collection is easy to add.",
+        "Chilled van, flexible route - a pickup on the way is barely a detour.",
+        "We can divert to collect provided it is roughly on the day's run.",
+        "Collection suits us better than delivery; we are rarely at base.",
+        "Our vehicle holds temperature, so we can take chilled goods straight from you."
       ],
       "needs": [
         "Fresh produce moves best for us because we distribute within hours.",
         "Perishables are ideal precisely because nothing sits. Same-day turn.",
-        "Produce and dairy. We hand out everything we load."
+        "Produce and dairy. We hand out everything we load.",
+        "Fresh produce and dairy. We distribute within hours, so perishable is fine.",
+        "Short-dated items work well here - everything moves the same day.",
+        "Produce, dairy, bread. If it needs eating this week, we are a good home.",
+        "Highly perishable food suits us precisely because we do not store it.",
+        "Fresh anything, as long as the quantity fits one route."
       ]
     },
     "school_pantry": {
       "label": "School or campus pantry",
-      "ntee": ["K31"],
+      "ntee": [
+        "K31"
+      ],
       "size_hint": "small",
       "cold_storage": "domestic",
       "frozen": false,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 1],
-      "pickup_window_hours": [6, 24],
-      "weekly_households": [50, 400],
+      "max_pallets": [
+        0,
+        1
+      ],
+      "pickup_window_hours": [
+        6,
+        24
+      ],
+      "weekly_households": [
+        50,
+        400
+      ],
       "openers": [
         "Campus pantry open to students and their families.",
         "School-based pantry serving students, staff, and neighboring households.",
-        "Student food pantry stocked for {h} visits a week during term."
+        "Student food pantry stocked for {h} visits a week during term.",
+        "School-based pantry sending food home with about {h} families each week.",
+        "Campus food closet open to students between classes.",
+        "Term-time pantry run from a school office, roughly {h} households.",
+        "District family resource centre distributing groceries after the last bell.",
+        "College pantry serving students, open during the teaching week only."
       ],
       "storage": [
-        "One refrigerator and a small freezer in a shared room. No dock.",
+        "One refrigerator in a shared room. No freezer, no dock.",
         "Limited fridge space. Most of what we hold is shelf-stable.",
-        "A fridge, a freezer, and shelving. Everything is carried in by hand."
+        "A fridge and open shelving. Everything is carried in by hand.",
+        "One refrigerator and a cupboard in a shared room.",
+        "A domestic fridge and some shelving in a repurposed classroom.",
+        "Cold storage is a single fridge and it is not always available to us.",
+        "Shelving in a storeroom, plus one refrigerator we share with staff.",
+        "Limited cold hold. Most of what we take has to sit on a shelf."
       ],
       "logistics": [
         "Pickups have to fit around class schedules, so weekday midday works best.",
         "Volunteers are students, so evenings and midday are realistic.",
-        "We can collect with a facilities vehicle if we book it ahead."
+        "We can collect with a facilities vehicle if we book it ahead.",
+        "Deliveries must arrive during school hours and be signed in at reception.",
+        "Site access is restricted - anything coming in has to be booked ahead.",
+        "We cannot collect. Everything comes through the visitor entrance by hand.",
+        "Term time only, weekdays, and never during arrival or dismissal.",
+        "Small deliveries only, carried in past a security desk."
       ],
       "needs": [
         "Single-serve and microwaveable items suit students without kitchens.",
         "Ready-to-eat and easy-prep. Many of our visitors have no stove.",
-        "Snacks, single portions, and produce that needs no cooking."
+        "Snacks, single portions, and produce that needs no cooking.",
+        "Discreet, easy items families can take home in a backpack.",
+        "Single-serve and easy-prep food our students can manage themselves.",
+        "Shelf-stable groceries in family-sized quantities. Nothing that needs cooking skill.",
+        "Breakfast items and snacks move fastest. Fresh fruit works if it is sturdy.",
+        "Things a child can carry and a household can use without much equipment."
       ]
     },
     "community_clinic": {
       "label": "Community clinic with food-as-medicine program",
-      "ntee": ["E32"],
+      "ntee": [
+        "E32"
+      ],
       "size_hint": "medium",
       "cold_storage": "medical",
       "frozen": true,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 2],
-      "pickup_window_hours": [8, 24],
-      "weekly_households": [80, 350],
+      "max_pallets": [
+        0,
+        2
+      ],
+      "pickup_window_hours": [
+        8,
+        24
+      ],
+      "weekly_households": [
+        80,
+        350
+      ],
       "openers": [
         "Community health center running a food-as-medicine program alongside primary care.",
         "Clinic-based nutrition program for patients managing diet-related conditions.",
-        "Federally qualified health center with an on-site produce prescription program."
+        "Federally qualified health center with an on-site produce prescription program.",
+        "Health centre pairing a food programme with chronic disease management.",
+        "Primary care clinic with a produce prescription scheme for patients.",
+        "Neighbourhood clinic distributing food alongside nutrition counselling.",
+        "Community health practice running a small food pharmacy on site.",
+        "Clinic-based programme supporting patients with diet-related conditions."
       ],
       "storage": [
         "Temperature-monitored refrigeration only. Everything we hold is logged.",
         "Medical-grade cold storage with continuous monitoring. Limited volume.",
-        "Refrigeration is monitored and alarmed. We cannot accept anything without a clear cold chain."
+        "Refrigeration is monitored and alarmed. We cannot accept anything without a clear cold chain.",
+        "Monitored medical refrigeration with a small frozen section. Volume is limited.",
+        "Alarmed cold storage, logged twice daily. Capacity is measured in crates.",
+        "Clinical-grade refrigeration only, and most of it is committed to other uses.",
+        "Temperature-logged cold and frozen storage, but very little of it.",
+        "Cold chain is documented end to end here. That limits how much we can hold."
       ],
       "logistics": [
         "No transport of our own. Delivery to the clinic entrance during business hours.",
         "We need items delivered - clinical staff cannot leave to collect.",
-        "Delivery only, weekdays, and someone must sign for it."
+        "Delivery only, weekdays, and someone must sign for it.",
+        "Delivery only, weekdays, and it has to be signed for at the front desk.",
+        "Clinical staff cannot leave to collect. Everything comes to the clinic door.",
+        "We need scheduled delivery during opening hours - no out-of-hours drops.",
+        "No transport of our own, and no space to hold anything on the pavement.",
+        "Deliveries have to be booked so someone is free to receive and log them."
       ],
       "needs": [
         "Fresh produce for the produce prescription program. Documented handling required.",
         "Produce and low-sodium items for patients with diet-related conditions.",
-        "Fresh fruit and vegetables, plus infant nutrition. Chain of custody matters here."
+        "Fresh fruit and vegetables, plus infant nutrition. Chain of custody matters here.",
+        "Fresh fruit and vegetables for the prescription programme, with handling documented.",
+        "Produce and low-sodium staples for patients managing blood pressure and diabetes.",
+        "Small volumes of high-quality fresh food. Provenance and handling matter here.",
+        "Fresh produce, and infant nutrition where the paperwork supports it.",
+        "Nutritionally targeted items rather than volume. We are a clinic, not a warehouse."
       ]
     },
     "diaper_bank": {
       "label": "Diaper bank and infant essentials",
-      "ntee": ["K30"],
+      "ntee": [
+        "K30"
+      ],
       "size_hint": "small",
       "cold_storage": "none",
       "frozen": false,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [1, 6],
-      "pickup_window_hours": [24, 96],
-      "weekly_households": [70, 500],
+      "max_pallets": [
+        1,
+        6
+      ],
+      "pickup_window_hours": [
+        24,
+        96
+      ],
+      "weekly_households": [
+        70,
+        500
+      ],
       "openers": [
         "Diaper bank distributing infant essentials to {h} families a month.",
         "Infant supply program - diapers, wipes, and formula.",
-        "Baby essentials pantry operating alongside a family resource center."
+        "Baby essentials pantry operating alongside a family resource center.",
+        "Diaper bank supplying about {h} families a month through partner sites.",
+        "Infant essentials programme - diapers, wipes and formula, no fresh food.",
+        "Baby supply bank distributing through clinics and family centres.",
+        "We handle infant and toddler essentials for roughly {h} households.",
+        "Non-food essentials bank focused on families with children under three."
       ],
       "storage": [
         "Dry storage only, no refrigeration of any kind.",
         "Shelving and a storage unit. Nothing cold, nothing frozen.",
-        "Ambient storage only. We can hold pallets but nothing perishable."
+        "Ambient storage only. We can hold pallets but nothing perishable.",
+        "Dry shelving and a storage unit. We hold nothing cold at all.",
+        "Ambient storage only - cartons, racking, and a roller door.",
+        "Warehouse-style dry space. Nothing here is temperature controlled.",
+        "Pallet racking for dry goods. No refrigeration of any kind on site.",
+        "Dry storage with room for several pallets, and no cold chain whatsoever."
       ],
       "logistics": [
         "We can borrow a box truck with notice for larger loads.",
         "Pickup is possible with a few days of lead time.",
-        "Delivery preferred, but we can collect non-perishables when we have a driver."
+        "Delivery preferred, but we can collect non-perishables when we have a driver.",
+        "We can take pallets if they come by tail lift - there is no dock here.",
+        "Ground-level roller door. A tail-lift delivery works, a dock-height trailer does not.",
+        "Volunteers unload by hand, so pallets need breaking down or a lift gate.",
+        "We can receive bulk dry goods with notice, unloaded at ground level.",
+        "Deliveries by van or tail lift only. We have no mechanical handling."
       ],
       "needs": [
         "Diapers, wipes, and sealed infant formula. We cannot take anything requiring refrigeration.",
         "Infant supplies and shelf-stable formula only. No cold items.",
-        "Non-food infant essentials. Formula must be sealed and in date."
+        "Non-food infant essentials. Formula must be sealed and in date.",
+        "Diapers by size, wipes, and sealed formula. Nothing perishable.",
+        "Infant essentials only - if it needs a fridge, we are the wrong recipient.",
+        "Sizes 1 through 4 move fastest, along with wipes and unopened formula.",
+        "Non-food baby supplies. Sealed, in date, and in original packaging.",
+        "Diapers, wipes, formula and toiletries. We cannot handle food safely."
       ]
     },
     "faith_weekly": {
       "label": "Faith-based pantry, limited hours",
-      "ntee": ["K31"],
+      "ntee": [
+        "K31"
+      ],
       "size_hint": "small",
       "cold_storage": "domestic",
       "frozen": true,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 2],
-      "pickup_window_hours": [12, 72],
-      "weekly_households": [60, 350],
+      "max_pallets": [
+        0,
+        2
+      ],
+      "pickup_window_hours": [
+        12,
+        72
+      ],
+      "weekly_households": [
+        60,
+        350
+      ],
       "openers": [
         "Congregation-run pantry open one morning a week.",
         "Faith-based food ministry distributing on Saturday mornings.",
-        "Church pantry open Wednesdays, serving whoever comes."
+        "Church pantry open Wednesdays, serving whoever comes.",
+        "Congregation pantry opening after the Sunday service.",
+        "Church food ministry running one distribution a week from the hall.",
+        "Parish pantry staffed by volunteers on a single weekday morning.",
+        "Faith-based distribution operating out of a fellowship hall.",
+        "Small religious charity handing out groceries one evening a week."
       ],
       "storage": [
         "A refrigerator and two chest freezers in the fellowship hall.",
         "Household fridge plus donated chest freezers. No dock.",
-        "Modest cold storage. Freezer space is the one thing we do have."
+        "Modest cold storage. Freezer space is the one thing we do have.",
+        "A domestic fridge and a donated chest freezer in the hall kitchen.",
+        "Household refrigeration plus freezer space, all of it in the church kitchen.",
+        "One fridge, one freezer, and cupboards. Shared with everything else the hall does.",
+        "Cold and frozen storage at household scale, and the hall is used for other things.",
+        "Fridge and freezer capacity that is modest but genuinely ours."
       ],
       "logistics": [
         "Volunteers collect on Saturday mornings, otherwise the building is closed.",
         "Someone can pick up on distribution day, not otherwise.",
-        "Our window is narrow - the building is only staffed a few hours a week."
+        "Our window is narrow - the building is only staffed a few hours a week.",
+        "The building is unlocked only around service times, which sets our window.",
+        "Access depends on who has the keys - we cannot take unscheduled deliveries.",
+        "Volunteers are here a few hours a week and that is when things can arrive.",
+        "We can arrange collection if a member has a van free, which is occasional.",
+        "Deliveries must land in our open window or there is nobody to receive them."
       ],
       "needs": [
         "Frozen protein keeps well for us between distribution days.",
         "Items that hold. We only open once a week, so fast-spoiling produce is hard.",
-        "Shelf-stable and frozen. Fresh items have to arrive the morning we open."
+        "Shelf-stable and frozen. Fresh items have to arrive the morning we open.",
+        "Shelf-stable and frozen keep best for us between distributions.",
+        "Anything that survives a week in a cupboard or a freezer.",
+        "Tinned and dry goods, plus frozen items we can hold until we open.",
+        "Non-perishables and frozen. Fresh has to land the morning we distribute.",
+        "Food that waits well. Our cycle is weekly, not daily."
       ]
     },
     "halal_kosher": {
       "label": "Pantry serving dietary-observant community",
-      "ntee": ["K31"],
+      "ntee": [
+        "K31"
+      ],
       "size_hint": "small",
       "cold_storage": "domestic",
       "frozen": true,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 2],
-      "pickup_window_hours": [6, 24],
-      "weekly_households": [80, 400],
+      "max_pallets": [
+        0,
+        2
+      ],
+      "pickup_window_hours": [
+        6,
+        24
+      ],
+      "weekly_households": [
+        80,
+        400
+      ],
       "openers": [
         "Community pantry serving families who keep halal.",
         "Pantry serving an observant community with strict dietary requirements.",
-        "Neighborhood pantry serving families who keep kosher."
+        "Neighborhood pantry serving families who keep kosher.",
+        "Pantry serving families who keep religious dietary requirements.",
+        "Community food programme where certification is not optional.",
+        "Faith community pantry with strict separation and sourcing rules.",
+        "Distribution serving observant households across the neighbourhood.",
+        "Pantry where every item has to satisfy our community's dietary standards."
       ],
       "storage": [
         "Refrigerator and freezer, kept separate by category.",
         "Cold storage is segregated - we cannot mix categories in the same unit.",
-        "Fridge and freezer space with separation maintained throughout."
+        "Fridge and freezer space with separation maintained throughout.",
+        "Fridge and freezer space, with categories kept physically apart.",
+        "Domestic-scale cold and frozen storage, kept strictly segregated.",
+        "Separate refrigeration for different categories - that is non-negotiable here.",
+        "Household fridges and freezers, organised so nothing crosses over.",
+        "Cold storage is modest and partitioned by category rather than by date."
       ],
       "logistics": [
         "We can collect locally with a day of notice.",
         "Volunteer drivers available most weekdays.",
-        "Short-range pickup only, and we need to know what is in the load first."
+        "Short-range pickup only, and we need to know what is in the load first.",
+        "We need to see what is in a load before it arrives, not after.",
+        "Short-range collection only, and the contents have to be confirmed first.",
+        "Volunteers can collect locally once we have checked the manifest.",
+        "Delivery is fine, but an unlabelled mixed load is not usable to us.",
+        "We will collect nearby if someone can tell us exactly what is coming."
       ],
       "needs": [
         "Produce, dairy, and certified protein. We cannot accept pork or uncertified meat.",
         "Fresh produce is always usable. Meat must be certified or we cannot distribute it.",
-        "Vegetables, grains, and certified items only. Uncertified protein has to be declined."
+        "Vegetables, grains, and certified items only. Uncertified protein has to be declined.",
+        "Certified items only. Uncertified meat cannot be distributed, however good it is.",
+        "Produce is always usable. Anything animal-derived needs documentation.",
+        "Fresh fruit and vegetables, dry staples, and certified protein where available.",
+        "Labels matter more than volume here. Unmarked goods we have to refuse.",
+        "Vegetarian and produce items are the safest thing to send us."
       ]
     },
     "disaster_staging": {
       "label": "Disaster relief staging site",
-      "ntee": ["L41", "K30"],
+      "ntee": [
+        "L41",
+        "K30"
+      ],
       "size_hint": "large",
       "cold_storage": "none",
       "frozen": false,
       "dock": true,
       "refrigerated_transport": false,
-      "max_pallets": [10, 40],
-      "pickup_window_hours": [24, 120],
-      "weekly_households": [0, 2000],
+      "max_pallets": [
+        10,
+        40
+      ],
+      "pickup_window_hours": [
+        24,
+        120
+      ],
+      "weekly_households": [
+        0,
+        2000
+      ],
       "openers": [
         "Disaster relief staging warehouse, activated as needed.",
         "Regional staging site for emergency response supplies.",
-        "Relief logistics hub holding pre-positioned stock."
+        "Relief logistics hub holding pre-positioned stock.",
+        "Emergency staging site that activates when a response is called.",
+        "Relief warehouse holding stock between incidents.",
+        "Disaster response depot - quiet most of the year, then not at all quiet.",
+        "Staging facility supporting field distribution during an activation.",
+        "Emergency logistics site operated by a volunteer response organisation."
       ],
       "storage": [
         "Large ambient warehouse with dock and forklift. No refrigeration.",
         "Dock-height warehouse, racked, no cold chain at all.",
-        "Substantial dry storage and pallet handling. Nothing refrigerated."
+        "Substantial dry storage and pallet handling. Nothing refrigerated.",
+        "Ambient warehouse space only. We hold nothing refrigerated.",
+        "Large dry footprint with racking. No cold chain anywhere on site.",
+        "Pallet capacity is our whole offer. Temperature control is not.",
+        "Dry storage measured in truckloads, and not a single refrigerator.",
+        "High-bay dry racking. Perishables are outside what we can handle."
       ],
       "logistics": [
         "Box trucks available. We can collect large volumes with notice.",
         "Own fleet for dry goods. We move pallets, not perishables.",
-        "Trucking available, but ambient loads only."
+        "Trucking available, but ambient loads only.",
+        "Dock-height receiving with forklifts. We can take a full trailer.",
+        "Loading dock, pallet handling, and volunteers who can turn a truck fast.",
+        "We can receive at scale during an activation and slowly the rest of the time.",
+        "Dock and forklift on site. Transport out is arranged per incident.",
+        "Bulk receiving is straightforward. Onward movement depends on the response."
       ],
       "needs": [
         "Shelf-stable food, water, and supplies. We cannot take anything perishable.",
         "Non-perishables in bulk. Anything needing cold is wrong for this site.",
-        "Dry goods and sealed items with long dates."
+        "Dry goods and sealed items with long dates.",
+        "Shelf-stable at volume. Water, tinned goods, packaged rations.",
+        "Non-perishable bulk only. Anything with a cold requirement we have to decline.",
+        "Palletised dry goods with long dates - we may hold them for months.",
+        "Long-life items in quantity. Short-dated food does not suit our cycle.",
+        "Bulk ambient stock. The longer the date, the more useful it is to us."
       ]
     },
     "produce_coop": {
       "label": "Produce-focused distribution co-op",
-      "ntee": ["K30"],
+      "ntee": [
+        "K30"
+      ],
       "size_hint": "medium",
       "cold_storage": "walk-in",
       "frozen": false,
       "dock": true,
       "refrigerated_transport": true,
-      "max_pallets": [4, 14],
-      "pickup_window_hours": [6, 24],
-      "weekly_households": [250, 1200],
+      "max_pallets": [
+        4,
+        14
+      ],
+      "pickup_window_hours": [
+        6,
+        24
+      ],
+      "weekly_households": [
+        250,
+        1200
+      ],
       "openers": [
         "Produce redistribution co-op moving fresh fruit and vegetables to {n} sites.",
         "Fresh-produce focused hub supplying neighborhood distributions.",
-        "Cooperative that specializes in moving perishable produce quickly."
+        "Cooperative that specializes in moving perishable produce quickly.",
+        "Produce-focused distribution running fresh food out to {n} sites.",
+        "Fresh food co-operative aggregating produce for neighbourhood outlets.",
+        "Wholesale-style operation moving fruit and vegetables to {n} partners.",
+        "Produce hub taking grower surplus and pushing it out the same week.",
+        "Fresh distribution co-op built around fast turnover of perishable stock."
       ],
       "storage": [
         "Walk-in cooler sized for produce. No freezer - we move things, we do not hold them.",
         "Cold room and dock. Produce turns within 48 hours.",
-        "Walk-in refrigeration, dock receiving, deliberately no frozen capacity."
+        "Walk-in refrigeration, dock receiving, deliberately no frozen capacity.",
+        "Walk-in cold rooms sized for crates and pallets of fresh product.",
+        "Cold storage for produce at pallet scale, turned over every few days.",
+        "Chilled warehousing built for fruit and vegetables, not for frozen stock.",
+        "Walk-in coolers and a sorting floor. Everything moves within the week.",
+        "Refrigerated bays for fresh product, with no frozen capability at all."
       ],
       "logistics": [
         "Refrigerated truck on standby. Produce is the whole point of our operation.",
         "Reefer available daily. We can be there within a couple of hours.",
-        "Our truck runs six days a week and prioritizes short-shelf-life loads."
+        "Our truck runs six days a week and prioritizes short-shelf-life loads.",
+        "Dock and pallet handling, plus a chilled vehicle for collections.",
+        "We can collect in refrigerated transport and receive at dock height.",
+        "Forklift, dock, and a reefer van - fresh product is what we are built for.",
+        "Pallets in, pallets out, with the cold chain intact both ways.",
+        "We will send a chilled vehicle for anything worth collecting."
       ],
       "needs": [
         "Fresh fruit and vegetables, the more perishable the better - we turn it fast.",
         "Highly perishable produce. Short shelf life is not a problem for us.",
-        "Leafy greens, soft fruit, anything with hours rather than days left."
+        "Leafy greens, soft fruit, anything with hours rather than days left.",
+        "Fruit and vegetables in quantity. Grower surplus is exactly our business.",
+        "Fresh produce by the pallet. Cosmetic seconds are entirely fine.",
+        "Field-run and second-grade produce - we sort it rather than reject it.",
+        "Bulk fresh only. We have no freezer, and dry goods are not our trade.",
+        "High-volume perishable produce, provided it can move within days."
       ]
     },
     "rural_outpost": {
       "label": "Rural pantry, long drive",
-      "ntee": ["K31"],
+      "ntee": [
+        "K31"
+      ],
       "size_hint": "small",
       "cold_storage": "domestic",
       "frozen": true,
       "dock": false,
       "refrigerated_transport": false,
-      "max_pallets": [0, 2],
-      "pickup_window_hours": [24, 96],
-      "weekly_households": [30, 180],
+      "max_pallets": [
+        0,
+        2
+      ],
+      "pickup_window_hours": [
+        24,
+        96
+      ],
+      "weekly_households": [
+        30,
+        180
+      ],
       "openers": [
         "Rural pantry covering a wide area with few other options nearby.",
         "Small-town pantry, nearest alternative is a long drive for our clients.",
-        "County pantry serving scattered households across a rural area."
+        "County pantry serving scattered households across a rural area.",
+        "Rural pantry serving a scattered catchment, open twice a month.",
+        "Small-town food programme covering a wide area with few volunteers.",
+        "Village pantry a long way from the nearest distribution centre.",
+        "Country pantry where the next food bank is over an hour's drive.",
+        "Remote outpost pantry serving households spread across the county."
       ],
       "storage": [
         "A refrigerator and two freezers. Space is the constraint, not willingness.",
         "Domestic cold storage. We stretch it as far as it goes.",
-        "Limited fridge and freezer capacity in a converted storeroom."
+        "Limited fridge and freezer capacity in a converted storeroom.",
+        "A domestic fridge and a chest freezer in the back room.",
+        "Household refrigeration plus a freezer, both bought second hand.",
+        "Fridge and freezer at household scale, and a dry store that floods in spring.",
+        "Modest cold and frozen storage, all of it domestic equipment.",
+        "One fridge, one freezer, and shelving. It is enough for our cycle, just."
       ],
       "logistics": [
         "We are a long way out. Collection means most of a day for a volunteer.",
         "Distance is our real limit - a pickup is a two-hour round trip.",
-        "Delivery is far more realistic for us than pickup."
+        "Delivery is far more realistic for us than pickup.",
+        "Any collection is a two-hour round trip, so it has to be worth the diesel.",
+        "We can drive in for a full load, but not for a few boxes.",
+        "Distance is the constraint. One trip a fortnight is realistic, more is not.",
+        "Delivery is far better for us, though drivers often struggle to find the place.",
+        "A volunteer will make the drive if the load justifies it."
       ],
       "needs": [
         "Items that survive the drive. Shelf-stable and frozen work best.",
         "Anything that holds up over a long trip. Fragile produce arrives bruised.",
-        "Durable goods. We would love fresh produce but it rarely survives the journey."
+        "Durable goods. We would love fresh produce but it rarely survives the journey.",
+        "Long-dated shelf-stable goods. Our distribution cycle is measured in weeks.",
+        "Bulk non-perishables and frozen. Fresh rarely survives the journey and the wait.",
+        "Dry staples in quantity - we cannot come back for a top-up.",
+        "Items with long dates. Anything short-dated is wasted on a fortnightly cycle.",
+        "Shelf-stable and frozen only, in the largest quantity we can carry home."
       ]
     }
   },
-
   "populations": [
     "General public",
     "General public, no proof of residence required",
@@ -464,7 +901,6 @@
     "Patients enrolled in our programs",
     "Anyone who walks in"
   ],
-
   "service_days": [
     "Monday",
     "Tuesday",
@@ -479,7 +915,6 @@
     "Second and fourth Wednesday of the month",
     "First Saturday of the month"
   ],
-
   "notes_suffix": [
     "New clients fill out a short intake form on arrival.",
     "No sign-in required.",
@@ -489,7 +924,6 @@
     "Volunteers are on site an hour before and after distribution.",
     ""
   ],
-
   "planted_cases": {
     "_readme": "Deliberately planted hard cases. Section 8 of the notebook explains why each exists. These are appended to the generated corpus so every city has them, and they are what makes the difference between semantic search earning its place and merely appearing to work.",
     "vocabulary_mismatch": [
