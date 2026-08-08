@@ -14,90 +14,23 @@ not "poisonous after."
 
 And within a few miles of each of those, someone will skip dinner.
 
-This is not a supply problem. There is more than enough food. It is a **matching problem under
-a clock**, and the clock is the whole difficulty. The grocer has four hours before the truck
+This is not a supply problem. Food that could be eaten is being thrown away a few miles from
+people who need it. It is a **matching problem under a clock**, and the clock is the whole
+difficulty. The grocer has four hours before the truck
 goes to the compactor. The pantry two miles away could take every crate—if they knew it
 existed, if they had somewhere cold to put it, and if someone could go and get it in time.
 
-Today nobody makes that match, because making it requires knowing, in the same minute, what
-just became available, who could use it, what they can physically store, and how long the food
-has left. That is four questions, and by the time a human answers them the food is gone.
+Most of the time nobody makes that match. Where it does happen it is usually a person with a
+phone and a spreadsheet, or one of a handful of rescue platforms operating in a few cities—
+because making the match requires knowing, in the same minute, what just became available, who
+could use it, what they can physically store, and how long the food has left. That is four
+questions, and by the time a human answers them the food is gone.
 
 **Your job today is to build the thing that answers all four before the clock runs out.**
 
----
-
-## First: pick a metro
-
-**This is not a universal application. It is an application for one city**, and choosing
-yours is the first real decision your team makes.
-
-You do **not** have to pick the city you're sitting in.
-
-Start here. These are tested end to end:
-
-| Metro | Organizations | Households with no vehicle | Notes |
-|---|---:|---:|---|
-| **New York** | 363 | 45% | Highest no-vehicle rate in the country. Also the biggest: 363 organizations and 2,565 tracts, so every step takes longer |
-| **Philadelphia** | 106 | 22% | Also has real published operational profiles |
-| **Chicago** | 183 | 20% | The notebook default |
-| **Atlanta** | 126 | 13% | |
-| **Seattle** | 114 | 7% | Has **real** published operational profiles you can compare our generated ones against |
-| **Dallas** | 173 | 6% | |
-| **Houston** | 215 | 6% | Second-largest corpus |
-| **Phoenix** | 114 | 6% | |
-| **Denver** | 106 | 5% | Thinnest corpus of the nine, and the flattest vehicle-access signal |
-
-Sorted by that second column, because it is the one worth reading before you choose. Vehicle
-access is what makes food access different from plain poverty—if the nearest full grocery
-store is three miles away, having no car is what turns a tight budget into an empty
-refrigerator.
-
-Notice that the list splits into two groups rather than sliding smoothly. Four metros sit at
-20% and above; five sit at 13% and below, four of those clustered at 5–7%. In the second group
-almost everybody drives, so vehicle access barely separates one neighbourhood from another and
-your equity audit quietly collapses into "is this area poor"—which you could have measured with
-income alone. That does not make those metros wrong. It makes them a harder place to find
-something interesting, and worth knowing before hour three rather than after.
-
-**We left Denver on the list on purpose.** It is worst on both axes—106 organizations, the
-fewest of the nine, and 5% no-vehicle, the flattest signal—so it is the one metro here where
-the data will genuinely fight you. That is a legitimate thing to build on if you go in knowing
-it: with a smaller corpus your nine planted edge cases are about 8% of the search space rather
-than 3%, which makes them easier to find and harder to dismiss, and an equity audit that comes
-back with "this variable told us nothing here, and here is the evidence" is a better finding
-than one that got lucky. Pick it deliberately or not at all.
-
-One honest caveat about the column: it is the metro-wide rate, not the spread *within* the
-metro, and spread is what an audit actually needs. The two usually travel together—a metro at
-5% has almost nowhere with high numbers—but they are not the same thing.
-
-All nine were run end to end and measured on 2026-08-08 from the published snapshot. The
-no-vehicle figure is population-weighted across the metro's census tracts, so a 40-person tract
-does not count the same as a 6,000-person one.
-
-**Any US city will work**—the data is national. If you want one that isn't listed, **Appendix B
-of the notebook** derives its bounding box for you and then tells you whether the city is worth
-building on: how many organizations you'd get, and whether the need signals have enough spread
-for your equity audit to find anything—it reports that spread directly, which is the number the
-caveat above is about. It will tell you plainly if a city is a bad choice, which is cheaper to
-learn now than at hour three.
-
-> **Why US only?** Our socioeconomic layer is the American Community Survey, and the Canadian
-> census has no equivalent vehicle-access variable. Toronto teams should pick a US metro and
-> build there; the brokering logic is identical and it keeps every team's results comparable.
-> If you want to continue afterward, ask a coach for the Canada appendix—Statistics Canada
-> publishes an excellent deprivation index and a grocery-store proximity measure that is
-> arguably better than anything we have here.
-
-Then get specific, because specificity is what makes a demo land:
-
-> *"We coordinate food rescue for a mid-size city. It's 4pm on a Thursday. A regional grocer
-> just called: they're clearing three stores of prepared deli food before close, roughly 40
-> cases, and they need it gone by 8. I have eleven volunteer drivers on a group text and no
-> idea who can actually take prepared food tonight."*
-
-That's your scenario. Write it down. Everything you build should answer to it.
+You'll build it for **one city**, not for everywhere. Which city is a real decision and it is
+yours to make, but it will mean more once you know what you're building—so it comes a few
+sections down rather than here.
 
 ---
 
@@ -182,68 +115,82 @@ separates a team.
 | *"Has this recipient taken from us before?"* | Any persistence layer. Firestore is a natural fit and nothing in our stack covers it |
 | *"Don't let two drivers claim the same pallet"* | Reservation state, which needs a transactional database—Firestore, AlloyDB, Cloud SQL or Spanner. BigQuery is an analytics warehouse and is genuinely the wrong tool for a claim/lock |
 | *"Is this tract an official USDA food desert?"* | [USDA Food Access Research Atlas](https://www.ers.usda.gov/data-products/food-access-research-atlas/)—not in BigQuery, so you'd stage it yourself |
-| *"A new pantry wants to join. Who writes their profile?"* | Nobody, today. See below—this is the most interesting add-on available |
-
-### The add-on we'd build if we had another four hours
-
-Read the data section below and you'll find us admitting something: **the operational half of
-every recipient profile is generated, because that information is not public for any pantry in
-the United States.** Not hidden—simply never collected. A pantry knows whether it has a walk-in
-cooler. Nobody has ever asked all of them at once.
-
-So build the thing that asks.
-
-**An intake agent.** A coordinator at a new pantry talks to it, and it produces the structured
-profile your matcher needs. Not a form—a conversation. Because a form gets you *"large fridge,"*
-and an agent hears *"we've got a fridge and a chest freezer out back"* and asks the follow-up
-that actually matters: **can you take a pallet, or does it need to come in by hand?** That
-single distinction decides half the matches in this challenge, and no dropdown will ever
-capture it.
-
-Why this is worth your time rather than just worthy:
-
-- **It closes the loop on our stated limitation.** We told you the data doesn't exist. You went
-  and got it. That is a genuinely strong thing to say in a demo.
-- **Its output feeds your differentiator directly.** The agent writes `profile_text`. Embed it
-  and the new organization is searchable immediately—a pantry can register and receive a match
-  in the same demo. That's a complete loop, and it's a much better closing beat than a table.
-- **It is cheaper than it looks.** Intake is a handful of writes a day with nobody competing
-  for the same row, so appending to BigQuery is fine. **Don't confuse this with the reservation
-  problem**—two drivers claiming the same pallet in the same second is what needs a
-  transactional database. Registering a pantry is not.
-
-A lighter variant if you're short on time: point the agent at an organization's existing
-website and have it draft the profile for a human to confirm. Same idea, far less typing, and
-it scales to the whole city.
+| *"A new pantry wants to join. Who writes their profile?"* | Nobody, today. See [Going further](#going-further)—this is the most interesting add-on available |
 
 ---
 
-## What will set yours apart
+## Now pick your metro
 
-Every team building Challenge 2 gets the same organizations, the same corpus, the same
-technology. **The core is not where you win.**
+**This is not a universal application. It is an application for one city**, and choosing
+yours is the first real decision your team makes.
 
-Spend fifteen minutes deciding what *your* version does that nobody else's will:
+You do **not** have to pick the city you're sitting in.
 
-- **Solve the "they said no" problem.** Everyone will build a top-1 match. Almost nobody will
-  build the graceful second and third option, or the agent that learns a recipient declined and
-  routes around them. Coordinators live in that world.
-- **Split a load nobody can take whole.** Five tons of potatoes has no single recipient. An
-  agent that proposes a three-way split with three drafted messages is doing something real.
-- **Make the clock visible.** A match that arrives with "this has 6 hours left, they can
-  collect in 2, here's your margin" is a different product from one that returns a name.
-- **Break ties on something defensible.** Two recipients will often be equally viable. You have
-  `reported_income` (real), `weekly_households`, and the need profile of the tract they sit in.
-  Picking one deliberately and being able to say why beats returning whichever the search
-  happened to rank first.
-- **Take the equity audit seriously** instead of as a footnote. It's the most interesting
-  conversation available in this challenge and most teams will skip it.
-  ([What that means, concretely](#what-auditing-the-outcome-actually-means).)
-- **Bring a dataset nobody else has**—your city's actual pantry directory, a transit feed, a
-  recall API. (See [Bringing your own data](#bringing-your-own-data)—check the licence first.)
+Start here. These are tested end to end:
 
-Read [how you'll be judged](#how-youll-be-judged) *before* you decide. It's at the bottom, it
-takes two minutes, and it will change what you build.
+| Metro | Organizations | Households with no vehicle | Notes |
+|---|---:|---:|---|
+| **New York** | 363 | 45% | Highest no-vehicle rate in the country. Also the biggest: 363 organizations and 2,565 tracts, so every step takes longer |
+| **Philadelphia** | 106 | 22% | Also has real published operational profiles |
+| **Chicago** | 183 | 20% | The notebook default |
+| **Atlanta** | 126 | 13% | |
+| **Seattle** | 114 | 7% | Has **real** published operational profiles you can compare our generated ones against |
+| **Dallas** | 173 | 6% | |
+| **Houston** | 215 | 6% | Second-largest corpus |
+| **Phoenix** | 114 | 6% | |
+| **Denver** | 106 | 5% | Thinnest corpus of the nine, and the flattest vehicle-access signal |
+
+Sorted by that second column, because it is the one worth reading before you choose. Vehicle
+access is what makes food access different from plain poverty—if the nearest full grocery
+store is three miles away, having no car is what turns a tight budget into an empty
+refrigerator.
+
+Notice that the list splits into two groups rather than sliding smoothly. Four metros sit at
+20% and above; five sit at 13% and below, four of those clustered at 5–7%. In the second group
+almost everybody drives, so vehicle access barely separates one neighbourhood from another and
+your equity audit quietly collapses into "is this area poor"—which you could have measured with
+income alone. That does not make those metros wrong. It makes them a harder place to find
+something interesting, and worth knowing before hour three rather than after.
+
+**We left Denver on the list on purpose.** It is worst on both axes—106 organizations, the
+fewest of the nine, and 5% no-vehicle, the flattest signal—so it is the one metro here where
+the data will genuinely fight you. That is a legitimate thing to build on if you go in knowing
+it: with a smaller corpus your nine planted edge cases are about 8% of the search space rather
+than 3%, which makes them easier to find and harder to dismiss, and an equity audit that comes
+back with "this variable told us nothing here, and here is the evidence" is a better finding
+than one that got lucky. Pick it deliberately or not at all.
+
+One honest caveat about the column: it is the metro-wide rate, not the spread *within* the
+metro, and spread is what an audit actually needs. The two usually travel together—a metro at
+5% has almost nowhere with high numbers—but they are not the same thing.
+
+All nine were run end to end and measured on 2026-08-08 from the published snapshot. The
+no-vehicle figure is population-weighted across the metro's census tracts, so a 40-person tract
+does not count the same as a 6,000-person one.
+
+**Any US city will work**—the data is national. If you want one that isn't listed, **Appendix B
+of the notebook** derives its bounding box for you and then tells you whether the city is worth
+building on: how many organizations you'd get, and whether the need signals have enough spread
+for your equity audit to find anything—it reports that spread directly, which is the number the
+caveat above is about. It will tell you plainly if a city is a bad choice, which is cheaper to
+learn now than at hour three.
+
+> **Why US only?** Our socioeconomic layer is the American Community Survey, and the Canadian
+> census has no equivalent vehicle-access variable. Toronto teams should pick a US metro and
+> build there; the brokering logic is identical and it keeps every team's results comparable.
+> If you want to continue afterward, ask a coach for the Canada appendix—Statistics Canada
+> publishes an excellent deprivation index and a grocery-store proximity measure that is
+> arguably better than anything we have here.
+
+Then make the spinach call your own. The scenario above is ours; yours should name your city,
+your donor, and your track:
+
+> *"We coordinate food rescue in ______. A ______ has just offered us ______, and it has to move
+> within ______. Here is who we'd have to call, and here is what we don't know about them."*
+
+Write it down before you write code. Every design argument you have this afternoon—what to
+embed, how to rank, what to cut—resolves faster against a specific situation than against a
+general one, and it is the sentence your demo opens with.
 
 ---
 
@@ -343,6 +290,10 @@ and **send your username to the repo owner** while they're setting up.
 
 **Agree your metro, your track, and your scenario** (see above). Five minutes. Write it where
 everyone can see it.
+
+**Then spend ten more on [Going further](#going-further).** It sits near the bottom because it
+only makes sense once you know what you're building—but it is the section that decides whether
+your demo looks like everyone else's, so read it before you write code rather than after.
 
 **Split into four lanes.** All four start immediately, in parallel.
 
@@ -660,6 +611,75 @@ you've found something more interesting: **your matcher may be optimising for lo
 capability, because large organizations write more detailed profiles and sit in industrial
 areas.** That is a real, subtle failure mode, it is probably happening, and presenting it
 honestly will land better than a slide claiming everything worked.
+
+---
+
+## Going further
+
+Everything above is what your agent has to do. Everything below is optional, and it is where
+the difference between two teams actually shows up.
+
+---
+
+### What will set yours apart
+
+Every team building Challenge 2 gets the same organizations, the same corpus, the same
+technology. **The core is not where you win.**
+
+Spend fifteen minutes deciding what *your* version does that nobody else's will:
+
+- **Solve the "they said no" problem.** Everyone will build a top-1 match. Almost nobody will
+  build the graceful second and third option, or the agent that learns a recipient declined and
+  routes around them. Coordinators live in that world.
+- **Split a load nobody can take whole.** Five tons of potatoes has no single recipient. An
+  agent that proposes a three-way split with three drafted messages is doing something real.
+- **Make the clock visible.** A match that arrives with "this has 6 hours left, they can
+  collect in 2, here's your margin" is a different product from one that returns a name.
+- **Break ties on something defensible.** Two recipients will often be equally viable. You have
+  `reported_income` (real), `weekly_households`, and the need profile of the tract they sit in.
+  Picking one deliberately and being able to say why beats returning whichever the search
+  happened to rank first.
+- **Take the equity audit seriously** instead of as a footnote. It's the most interesting
+  conversation available in this challenge and most teams will skip it.
+  ([What that means, concretely](#what-auditing-the-outcome-actually-means).)
+- **Bring a dataset nobody else has**—your city's actual pantry directory, a transit feed, a
+  recall API. (See [Bringing your own data](#bringing-your-own-data)—check the licence first.)
+
+Read [how you'll be judged](#how-youll-be-judged) *before* you decide. It's at the bottom, it
+takes two minutes, and it will change what you build.
+
+---
+
+### The add-on we'd build if we had another four hours
+
+The data section above admits something: **the operational half of every recipient profile is
+generated, because that information is not public for any pantry in the United States.** Not hidden—simply never collected. A pantry knows whether it has a walk-in
+cooler. Nobody has ever asked all of them at once.
+
+So build the thing that asks.
+
+**An intake agent.** A coordinator at a new pantry talks to it, and it produces the structured
+profile your matcher needs. Not a form—a conversation. Because a form gets you *"large fridge,"*
+and an agent hears *"we've got a fridge and a chest freezer out back"* and asks the follow-up
+that actually matters: **can you take a pallet, or does it need to come in by hand?** That
+single distinction decides half the matches in this challenge, and no dropdown will ever
+capture it.
+
+Why this is worth your time rather than just worthy:
+
+- **It closes the loop on our stated limitation.** We told you the data doesn't exist. You went
+  and got it. That is a genuinely strong thing to say in a demo.
+- **Its output feeds your differentiator directly.** The agent writes `profile_text`. Embed it
+  and the new organization is searchable immediately—a pantry can register and receive a match
+  in the same demo. That's a complete loop, and it's a much better closing beat than a table.
+- **It is cheaper than it looks.** Intake is a handful of writes a day with nobody competing
+  for the same row, so appending to BigQuery is fine. **Don't confuse this with the reservation
+  problem**—two drivers claiming the same pallet in the same second is what needs a
+  transactional database. Registering a pantry is not.
+
+A lighter variant if you're short on time: point the agent at an organization's existing
+website and have it draft the profile for a human to confirm. Same idea, far less typing, and
+it scales to the whole city.
 
 ---
 
