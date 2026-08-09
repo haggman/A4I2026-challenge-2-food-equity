@@ -34,6 +34,38 @@ sections down rather than here.
 
 ---
 
+## How to read this
+
+**This is a reference for your whole afternoon, not something to read end to end now.** Here is
+what each of you needs in the first fifteen minutes.
+
+| If you are… | Read now | Come back for |
+|---|---|---|
+| **Everyone, together** | [The four things](#the-four-things-youre-working-with) · [Three tracks](#three-tracks-one-architecture) · [Pick your metro](#now-pick-your-metro) | — |
+| **Team lead** | [Step 0](#step-0organise-your-team) · [How you'll be judged](#how-youll-be-judged) | [Going further](#going-further)—read it *before* you write code, not before you demo |
+| **Data lane** | [Step 4, load the data](#step-4load-the-data) · [What you'll have](#what-youll-have) | [The data, and why we chose it](#the-data-and-why-we-chose-it) · Section 13 of the notebook |
+| **Agent lane** | [What you're building](#what-youre-building) · [The technology](#the-technology-youll-use) | [`agent/README.md`](agent/) · [Questions that need more than we gave you](#questions-that-need-more-than-we-gave-you) |
+| **Front end lane** | [Front end lane](#front-end-lane2-people) | [Your output artifact](#your-output-artifact-the-match-brief) |
+| **Story lane** | [Your output artifact](#your-output-artifact-the-match-brief) | [The data](#the-data-and-why-we-chose-it)—which half is real, because you will be asked |
+
+**Three things everybody should know by the end of hour one**, whatever lane you are in:
+
+1. **Half your recipient data is real and half is generated.** The organizations, addresses and
+   NTEE codes come from the IRS; every operational detail—cold storage, capacity, pickup
+   window—we made up, because no such data is public for any pantry in the country. A judge will
+   ask which half is which, and the honest answer is a good one. It is
+   [here](#the-data-and-why-we-chose-it).
+2. **Your agent must genuinely call the vector search.** Running an embedding query and then
+   recommending on category or a `LIKE` filter is the most common way to miss the point while
+   appearing to hit it.
+3. **The best semantic match is regularly the wrong answer.** Search for somewhere to send ten
+   crates of spinach and the top of the list will include organizations that talk beautifully
+   about fresh produce and cannot refrigerate a single crate. That is not the search failing—it
+   is the whole challenge. Meaning is not capacity, and what you do *after* the search is what
+   you are being judged on.
+
+---
+
 ## The four things you're working with
 
 Small vocabulary, used consistently everywhere from here on. Worth thirty seconds now.
