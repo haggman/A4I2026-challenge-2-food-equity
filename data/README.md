@@ -9,7 +9,7 @@ half of each recipient profile.
 judge. Everything the generator can say about an organization is in this file: fourteen
 archetypes, their storage and transport characteristics, and the phrasings they draw from.
 
-The phrasing is modelled on real published operational profiles from Seattle/King County
+The phrasing is modeled on real published operational profiles from Seattle/King County
 (Public Domain) and Pennsylvania (US Government Works). The organizations themselves are real
 and come from the IRS Exempt Organizations Business Master File at notebook runtime—they are
 not in this file.

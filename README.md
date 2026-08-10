@@ -8,7 +8,7 @@
 
 Somewhere in your city this afternoon, a grocer is going to throw away four hundred pounds of
 perfectly good food. Not spoiled food—good food, with days left on it, that nobody happened to
-buy. A farm will disc a field of squash back into the soil because the buyer cancelled. A
+buy. A farm will disc a field of squash back into the soil because the buyer canceled. A
 distributor will send a pallet of yogurt to landfill over a date code that means "best before,"
 not "poisonous after."
 
@@ -42,7 +42,7 @@ what each of you needs in the first fifteen minutes.
 | If you are… | Read now | Come back for |
 |---|---|---|
 | **Everyone, together** | [The four things](#the-four-things-youre-working-with) · [Three tracks](#three-tracks-one-architecture) · [Pick your metro](#now-pick-your-metro) | — |
-| **Team lead** | [Step 0](#step-0organise-your-team) · [How you'll be judged](#how-youll-be-judged) | [Going further](#going-further)—read it *before* you write code, not before you demo |
+| **Team lead** | [Step 0](#step-0organize-your-team) · [How you'll be judged](#how-youll-be-judged) | [Going further](#going-further)—read it *before* you write code, not before you demo |
 | **Data lane** | [Step 4, load the data](#step-4load-the-data) · [What you'll have](#what-youll-have) | [The data, and why we chose it](#the-data-and-why-we-chose-it) · Section 13 of the notebook |
 | **Agent lane** | [What you're building](#what-youre-building) · [The technology](#the-technology-youll-use) | [`agent/README.md`](agent/) · [Questions that need more than we gave you](#questions-that-need-more-than-we-gave-you) |
 | **Front end lane** | [Front end lane](#front-end-lane2-people) | [Your output artifact](#your-output-artifact-the-match-brief) |
@@ -94,7 +94,7 @@ solving.
 
 | Track | What arrives | Who can take it | What makes it hard |
 |---|---|---|---|
-| 🛒 **Retail & grocer rescue** | Small, unpredictable, mixed—produce, dairy, prepared foods | Neighbourhood pantries, shelters, soup kitchens | Hours, not days. Many recipients have a domestic fridge or nothing |
+| 🛒 **Retail & grocer rescue** | Small, unpredictable, mixed—produce, dairy, prepared foods | Neighborhood pantries, shelters, soup kitchens | Hours, not days. Many recipients have a domestic fridge or nothing |
 | 🚜 **Farm & agricultural surplus** | Enormous, single-item—five tons of potatoes, a truckload of berries | Regional food banks with docks and warehouses | Almost nobody can take a load this size. Splitting it is its own problem |
 | 🍼 **Critical non-food essentials** | Infant formula, diapers, temperature-sensitive supplies | Family shelters, clinics, diaper banks | Hard expiry, strict handling, and the narrowest set of qualified recipients |
 
@@ -124,7 +124,7 @@ Over the next two hours the same coordinator asks all of these:
 | *"They said no. Who's next?"* | The ranked list below the top hit—which is why you return more than one |
 | *"How long does spinach actually last once it leaves the store?"* | USDA shelf life, capped by the donor's own deadline |
 | *"Can they collect it themselves, or do I need to send a driver?"* | `refrigerated_transport`, `pickup_window_hours`, `service_days` |
-| *"Whose neighbourhood does this actually help?"* | Census tract demographics for the recipient's location |
+| *"Whose neighborhood does this actually help?"* | Census tract demographics for the recipient's location |
 | *"Write the message. I'll send it."* | Gemini, synthesising everything above |
 
 Notice these need **different things**. Some need the semantic search. Some need only a filter.
@@ -179,7 +179,7 @@ refrigerator.
 
 Notice that the list splits into two groups rather than sliding smoothly. Four metros sit at
 20% and above; five sit at 13% and below, four of those clustered at 5–7%. In the second group
-almost everybody drives, so vehicle access barely separates one neighbourhood from another and
+almost everybody drives, so vehicle access barely separates one neighborhood from another and
 your equity audit quietly collapses into "is this area poor"—which you could have measured with
 income alone. That does not make those metros wrong. It makes them a harder place to find
 something interesting, and worth knowing before hour three rather than after.
@@ -309,7 +309,7 @@ You have **4.5 hours** and there are **8–10 of you**. That is too many people 
 and the biggest risk to your team is the first hour disappearing into setup. Spend twenty
 minutes on Step 0. It pays for itself twice over.
 
-### Step 0—Organise your team
+### Step 0—Organize your team
 
 **Pick a team lead.** One person who makes the call when you're behind—and you *will* be behind.
 Deciding in advance who says "we're cutting that" is worth more than it sounds.
@@ -346,7 +346,7 @@ everything between raw tables and a match query the agent can call:
   no right answer. Pick one and be able to defend it.
 - **Hand the agent lane a working query early.** They need the exact SQL their tool will wrap.
 - **The equity audit** ([explained below](#what-auditing-the-outcome-actually-means)).
-- **Decide whether to bring extra data**, and if so, source it and check the licence.
+- **Decide whether to bring extra data**, and if so, source it and check the license.
 
 #### Agent lane—2 to 3 people
 
@@ -417,7 +417,7 @@ without asking a follow-up question:
 - **Why them**—what in their profile made them the fit, in a sentence a human would accept
 - **What they can actually take**—against the pallet count and storage on offer
 - **The clock**—how long the food has, whether they can collect inside it, and the margin
-- **Who it helps**—the neighbourhood their location serves
+- **Who it helps**—the neighborhood their location serves
 - **The drafted outreach message**, ready to send
 - **The next two options**, because the first one will sometimes say no
 
@@ -582,7 +582,7 @@ addresses, real classification, and each organization's **real reported annual r
 cooler, how many pallets they can take, when they can collect—**none of that is public for any
 organization in the United States.** It isn't hidden; nobody has ever collected it centrally.
 
-So we generate it, and the notebook shows you exactly how: fourteen archetypes, phrasing modelled
+So we generate it, and the notebook shows you exactly how: fourteen archetypes, phrasing modeled
 on **real** published profiles from Seattle/King County and Pennsylvania (both public domain),
 Their reported revenue does real work here rather than just sitting in a column: it places each
 organization inside its archetype's range, so a regional operation and a storefront pantry come
@@ -591,7 +591,7 @@ report a figure—the rest file a postcard return that carries none, which we tr
 rather than as *small*, because those are different things.
 
 The rest is generated, and the notebook shows you exactly how: fourteen archetypes, phrasing
-modelled on **real** published profiles from Seattle/King County and Pennsylvania (both public
+modeled on **real** published profiles from Seattle/King County and Pennsylvania (both public
 domain), and generation seeded from each organization's tax ID so the same organization always produces
 the same profile for every team.
 
@@ -675,7 +675,7 @@ Spend fifteen minutes deciding what *your* version does that nobody else's will:
   conversation available in this challenge and most teams will skip it.
   ([What that means, concretely](#what-auditing-the-outcome-actually-means).)
 - **Bring a dataset nobody else has**—your city's actual pantry directory, a transit feed, a
-  recall API. (See [Bringing your own data](#bringing-your-own-data)—check the licence first.)
+  recall API. (See [Bringing your own data](#bringing-your-own-data)—check the license first.)
 
 Read [how you'll be judged](#how-youll-be-judged) *before* you decide. It's at the bottom, it
 takes two minutes, and it will change what you build.
@@ -724,7 +724,7 @@ sourcing is exactly the judgment this challenge rewards.
 **Augment, don't replace.** Get the core working first. "Let's find better data" is one of the
 most reliable ways to lose ninety minutes and have nothing to demo.
 
-**Check the licence before you load it.** This is a publicly branded event and winning projects
+**Check the license before you load it.** This is a publicly branded event and winning projects
 get promoted. Anything you bring has to clear the same bar we applied to ourselves:
 
 | | |
@@ -733,7 +733,7 @@ get promoted. Anything you bring has to clear the same bar we applied to ourselv
 | ❌ No **NoDerivatives** (ND) | Building on the data is the whole point |
 | ❌ No **share-alike** (ODbL, CC BY-SA) | It would encumber what *you* build |
 | ❌ No **individual-level personal data** | Aggregate public statistics only |
-| ❌ No **unstated licence** | No licence means no rights granted |
+| ❌ No **unstated license** | No license means no rights granted |
 | ✅ Public domain, CC0, US Government works | Safe |
 
 **The trap most likely to catch you on this challenge:** the big national pantry directories—the
@@ -795,7 +795,7 @@ This is the one teams under-invest in, because it's least visible in a demo. It'
 your score and the easiest place to stand out. Four concrete things:
 
 **Data decisions you can defend.** Which half of your recipient data is real? (You were told.
-Make sure whoever presents knows.) If you brought your own dataset, do you know its licence?
+Make sure whoever presents knows.) If you brought your own dataset, do you know its license?
 
 **Validation.** Did you check your tables before building, or assume no error meant no problem?
 The notebook ships a validation section—using it, and saying what it told you, counts.

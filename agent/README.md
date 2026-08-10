@@ -10,7 +10,7 @@ not build the vehicle. The design decisions in your agent are what you'll be jud
 
 - **An ADK agent**, in Python.
 - **At least one tool you built yourself.** A Python function tool, or one you defined in MCP
-  Toolbox — either counts. The obvious candidate wraps your match query, but the more valuable
+  Toolbox—either counts. The obvious candidate wraps your match query, but the more valuable
   one holds the logic that isn't a single query: composing the search string, applying the
   constraint filter, assembling the Match Brief. Consuming only prebuilt generic tools and
   calling that your design does not count.
