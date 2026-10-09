@@ -468,9 +468,9 @@ Antigravity CLI already installed. Nothing to set up on your laptop, no admin ri
    **File → Open Folder** in VS Code, which is essentially what the editor is.
 
 New to any of this?
-[Using Cloud Shell](https://cloud.google.com/shell/docs/using-cloud-shell)
+[Using Cloud Shell](https://docs.cloud.google.com/shell/docs/using-cloud-shell)
 ·
-[Cloud Shell Editor overview](https://cloud.google.com/shell/docs/editor-overview)
+[Cloud Shell Editor overview](https://docs.cloud.google.com/shell/docs/editor-overview)
 
 One thing worth knowing: your `$HOME` directory persists between sessions. Anything outside it
 does not—so keep your work in the cloned repo.
