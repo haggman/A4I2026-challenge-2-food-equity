@@ -788,6 +788,12 @@ agent are what you'll be judged on.
 hours—that's the design, not a failure. A team that gets three quarters of the way with clear
 reasoning and honest limitations will beat a team that demos something polished and hollow.
 
+**You're judged against the track you chose**, not against a fixed idea of the right answer. A
+farm-surplus team is expected to solve the five-tons-of-potatoes problem, which means splitting a
+load and finding docks; a retail-rescue team is expected to move small, mixed, perishable offers to
+a pantry with a domestic fridge before they spoil. Neither is marked down for not looking like the
+other. Say which track you took, early.
+
 | Dimension | Weight | The question judges are asking |
 |---|---:|---|
 | **Impact & insight** | 30 | Would a coordinator actually use this? Is the match specific enough to act on? |
