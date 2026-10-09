@@ -762,12 +762,17 @@ emails to them.
 
 ```
 notebooks/c2_01_load_explore.ipynb   The main artifact. Run this first.
+notebooks/c2_90_publish_snapshot.ipynb  ROI maintainers only. You do not need it.
 scripts/load.sh                      Headless fallback if Colab is unavailable.
 data/profile_components.json         The vocabulary banks used to generate profiles.
                                      Read it—you should be able to inspect generated data.
 data/foodkeeper.json                 USDA shelf-life data (CC0), pinned. See below.
 agent/                               Empty. Your agent goes here.
 ```
+
+`c2_90_publish_snapshot.ipynb` is for ROI maintainers: it regenerates the Cloud Storage snapshot
+that `scripts/load.sh` reads from. If you run it you will get a permissions error, because you do not
+have write access to our bucket. That is expected, and you never need it.
 
 **Why `foodkeeper.json` is committed rather than downloaded:** both USDA hosts return the file
 happily in a browser and `403 Forbidden` to a notebook, because federal sites reject datacenter
