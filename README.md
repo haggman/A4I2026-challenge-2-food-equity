@@ -75,7 +75,7 @@ Small vocabulary, used consistently everywhere from here on. Worth thirty second
 | **Posting** | One offer of surplus, as a donor would actually type it: *"10 crates of spinach, harvested yesterday, needs cold storage."* Messy, free text, on a clock. This is the **query** side |
 | **Recipient** | An organization that could receive it—a pantry, shelter, soup kitchen, clinic, diaper bank. Each has a written **profile** describing what it serves and what it can physically handle. These are the **corpus** you search |
 | **Match** | A posting paired with a recipient, plus the reasoning: why them, what they can take, whether they can collect in time, and the message to send |
-| **Track** | Which *kind* of surplus you specialise in. Changes the shape of the postings, not the machinery |
+| **Track** | Which *kind* of surplus you specialize in. Changes the shape of the postings, not the machinery |
 
 The whole challenge is: **posting in, ranked matches out, with a defensible reason attached.**
 
@@ -142,7 +142,7 @@ separates a team.
 | The question | What you'd need to add |
 |---|---|
 | *"Who's within a 20-minute drive?"* | Google Maps routing. We give you coordinates and straight-line distance |
-| *"Plan the whole route for one van, five pickups"* | Multi-stop optimisation. A genuinely hard and genuinely impressive add-on |
+| *"Plan the whole route for one van, five pickups"* | Multi-stop optimization. A genuinely hard and genuinely impressive add-on |
 | *"Is this product under recall?"* | [openFDA food enforcement API](https://open.fda.gov/apis/food/enforcement/)—CC0, and an agent that checks before brokering is a real safety feature |
 | *"Has this recipient taken from us before?"* | Any persistence layer. Firestore is a natural fit and nothing in our stack covers it |
 | *"Don't let two drivers claim the same pallet"* | Reservation state, which needs a transactional database—Firestore, AlloyDB, Cloud SQL or Spanner. BigQuery is an analytics warehouse and is genuinely the wrong tool for a claim/lock |
@@ -261,7 +261,7 @@ to your own tools rather than generic queries, start there.
 ### What "a tool you built" means, and why we ask
 
 You could, in principle, do the entire semantic search through MCP Toolbox—it lets you define
-a tool as parameterised SQL, so the `VECTOR_SEARCH` itself can be a Toolbox tool with no Python
+a tool as parameterized SQL, so the `VECTOR_SEARCH` itself can be a Toolbox tool with no Python
 at all. That's a legitimate design and we're not going to pretend otherwise.
 
 **The requirement is one tool you designed, in either form.** What we're actually looking for is
@@ -287,7 +287,7 @@ nightly, no cold storage."* A keyword search scores that one **highly**, because
 exact phrase "cold storage"—as part of *not having any*.
 
 You cannot fix this with better keywords. Every pantry writes their profile differently, and
-there is no controlled vocabulary to normalise them to.
+there is no controlled vocabulary to normalize them to.
 
 **So you embed the meaning instead.** Each organization's profile becomes a vector, the incoming
 posting becomes a vector, and the match is a distance. Your agent must **call that search**—not
@@ -650,7 +650,7 @@ are?**
 
 Both answers are worth having. If your matches skew toward high-poverty, low-vehicle tracts, you
 have evidence your system finds real need—say so, with numbers. If they skew the other way,
-you've found something more interesting: **your matcher may be optimising for logistics
+you've found something more interesting: **your matcher may be optimizing for logistics
 capability, because large organizations write more detailed profiles and sit in industrial
 areas.** That is a real, subtle failure mode, it is probably happening, and presenting it
 honestly will land better than a slide claiming everything worked.
@@ -807,7 +807,7 @@ other. Say which track you took, early.
 | **Craft & communication** | 15 | Does the short pitch land, does the quick demo work, can you justify your interface? |
 | **Bonus—range** | **+10** | Technology breadth and ambition that *serves* the solution |
 
-Bonus sits **on top** of the 100, so ambition can't cannibalise the core. Nail the fundamentals
+Bonus sits **on top** of the 100, so ambition can't cannibalize the core. Nail the fundamentals
 and add nothing, and you can still win. Wire up five services with no coherent match, and you
 can't win on breadth alone.
 
