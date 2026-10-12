@@ -1,5 +1,5 @@
 {
-  "_readme": "Vocabulary banks used by notebooks/c2_01_load_explore.ipynb to synthesize the operational half of each recipient profile. The ORGANIZATIONS are real (IRS Exempt Organizations Business Master File). Their operational attributes - cold storage, capacity, pickup windows, dietary constraints - are not public for any organization, so we generate them. Phrasing is modelled on real profile text published by Seattle/King County (Public Domain) and Pennsylvania (USGOV_WORKS). Generation is seeded from each organization's EIN, so the same organization always produces the same profile on every run and for every team. See notebook Section 8.",
+  "_readme": "Vocabulary banks used by notebooks/c2_01_load_explore.ipynb to synthesize the operational half of each recipient profile. The ORGANIZATIONS are real (IRS Exempt Organizations Business Master File). Their operational attributes - cold storage, capacity, pickup windows, dietary constraints - are not public for any organization, so we generate them. Phrasing is modeled on real profile text published by Seattle/King County (Public Domain) and Pennsylvania (USGOV_WORKS). Generation is seeded from each organization's EIN, so the same organization always produces the same profile on every run and for every team. See notebook Section 7.",
   "_license": "This file is ROI Training's own work and carries no restrictions.",
   "archetypes": {
     "regional_foodbank": {
@@ -49,7 +49,7 @@
         "We run our own refrigerated box truck and can collect within a few hours of a call.",
         "Refrigerated truck available weekdays for pickup anywhere in the county.",
         "Own transport including a reefer van. Same-day collection is usually possible.",
-        "Two docks with levellers. We can receive a full trailer without notice.",
+        "Two docks with levelers. We can receive a full trailer without notice.",
         "Our own refrigerated fleet collects across the region on a daily schedule.",
         "Forklifts, pallet jacks, and a crew who can turn a truck in under an hour.",
         "We collect rather than wait for delivery, and we can be on the road within the hour.",
@@ -156,7 +156,7 @@
         "Hot meals served nightly, roughly {h} plates a week.",
         "Congregate meal program serving dinner six days a week.",
         "Daily hot lunch service in a commercial kitchen.",
-        "Hot meal service five days a week, roughly {h} covers a day.",
+        "Hot meal service five days a week, roughly {h} covers a week.",
         "Community kitchen serving a sit-down lunch to whoever arrives.",
         "Daily meal program cooking from scratch in a commercial kitchen.",
         "We serve hot food, not groceries - about {h} meals across the week.",
@@ -533,12 +533,12 @@
         500
       ],
       "openers": [
-        "Diaper bank distributing infant essentials to {h} families a month.",
+        "Diaper bank distributing infant essentials to {h} families a week.",
         "Infant supply program - diapers, wipes, and formula.",
         "Baby essentials pantry operating alongside a family resource center.",
-        "Diaper bank supplying about {h} families a month through partner sites.",
+        "Diaper bank supplying about {h} families a week through partner sites.",
         "Infant essentials program - diapers, wipes and formula, no fresh food.",
-        "Baby supply bank distributing through clinics and family centres.",
+        "Baby supply bank distributing through clinics and family centers.",
         "We handle infant and toddler essentials for roughly {h} households.",
         "Non-food essentials bank focused on families with children under three."
       ],
@@ -758,7 +758,7 @@
         "Dry goods and sealed items with long dates.",
         "Shelf-stable at volume. Water, canned goods, packaged rations.",
         "Non-perishable bulk only. Anything with a cold requirement we have to decline.",
-        "Palletised dry goods with long dates - we may hold them for months.",
+        "Palletized dry goods with long dates - we may hold them for months.",
         "Long-life items in quantity. Short-dated food does not suit our cycle.",
         "Bulk ambient stock. The longer the date, the more useful it is to us."
       ]
@@ -925,7 +925,7 @@
     ""
   ],
   "planted_cases": {
-    "_readme": "Deliberately planted hard cases. Section 8 of the notebook explains why each exists. These are appended to the generated corpus so every city has them, and they are what makes the difference between semantic search earning its place and merely appearing to work.",
+    "_readme": "Deliberately planted hard cases. Section 7 of the notebook explains why each exists. These are appended to the generated corpus so every city has them, and they are what makes the difference between semantic search earning its place and merely appearing to work.",
     "vocabulary_mismatch": [
       "We have cold chain capacity for palletized perishables and can receive at dock height.",
       "There is a walk-in cooler out back and a second one for overflow.",
