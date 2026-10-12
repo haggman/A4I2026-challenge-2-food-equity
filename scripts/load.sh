@@ -210,5 +210,6 @@ echo "  Organizations file). Their operational details are generated. The"
 echo "  notebook explains which is which, and judges will ask you."
 echo
 echo "  Next: embed recipients.profile_text with AI.EMBED, then VECTOR_SEARCH it."
-echo "  See the README for the syntax and the four traps."
+echo "  See Section 14 of notebooks/c2_01_load_explore.ipynb for the query shape and the"
+echo "  four syntax traps (it reads fine on GitHub without running)."
 echo

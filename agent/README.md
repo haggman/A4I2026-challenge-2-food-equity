@@ -28,4 +28,5 @@ in your corpus that semantically looks like a perfect match and physically canno
 food. What you do *after* the search—storage compatibility, pallet capacity, the pickup window
 against the clock—is where this agent becomes useful instead of merely clever.
 
-See the README for the four syntax traps, and Section 14 of the notebook for the query shape.
+See Section 14 of [`notebooks/c2_01_load_explore.ipynb`](../notebooks/c2_01_load_explore.ipynb)
+for the query shape and the four syntax traps (it reads fine on GitHub without running).

@@ -41,7 +41,7 @@ what each of you needs in the first fifteen minutes.
 
 | If you are… | Read now | Come back for |
 |---|---|---|
-| **Everyone, together** | [The four things](#the-four-things-youre-working-with) · [Three tracks](#three-tracks-one-architecture) · [What you're building](#what-youre-building) · [Pick your metro](#now-pick-your-metro) | — decide these before anyone opens a keyboard |
+| **Everyone, together** | [The four things](#the-four-things-youre-working-with) · [Three tracks](#three-tracks-one-architecture) · [What you're building](#what-youre-building) · [Pick your metro](#now-pick-your-metro) | Decide these before anyone opens a keyboard |
 | **Team lead** | [Step 0](#step-0organize-your-team) · [How you'll be judged](#how-youll-be-judged) | [Going further](#going-further)—read it *before* you write code, not before you demo |
 | **Data lane** | [Step 4, load the data](#step-4load-the-data) · [What you'll have](#what-youll-have) | [The data, and why we chose it](#the-data-and-why-we-chose-it) · Section 13 of the notebook |
 | **Agent lane** | [What you're building](#what-youre-building) · [The technology](#the-technology-youll-use) | [`agent/README.md`](agent/) · [Questions that need more than we gave you](#questions-that-need-more-than-we-gave-you) |
@@ -125,7 +125,7 @@ Over the next two hours the same coordinator asks all of these:
 | *"How long does spinach actually last once it leaves the store?"* | USDA shelf life, capped by the donor's own deadline |
 | *"Can they collect it themselves, or do I need to send a driver?"* | `refrigerated_transport`, `pickup_window_hours`, `service_days` |
 | *"Whose neighborhood does this actually help?"* | Census tract demographics for the recipient's location |
-| *"Write the message. I'll send it."* | Gemini, synthesising everything above |
+| *"Write the message. I'll send it."* | Gemini, synthesizing everything above |
 
 Notice these need **different things**. Some need the semantic search. Some need only a filter.
 One needs the agent to weigh a tradeoff and defend it. One needs it to write prose a human will
@@ -141,7 +141,7 @@ separates a team.
 
 | The question | What you'd need to add |
 |---|---|
-| *"Who's within a 20-minute drive?"* | Google Maps routing. We give you coordinates and straight-line distance |
+| *"Who's within a 20-minute drive?"* | Google Maps routing. We give you coordinates (ZIP-centroid for organizations, internal point for tracts); straight-line distance is one `ST_DISTANCE` away, and the tract join itself is left to you |
 | *"Plan the whole route for one van, five pickups"* | Multi-stop optimization. A genuinely hard and genuinely impressive add-on |
 | *"Is this product under recall?"* | [openFDA food enforcement API](https://open.fda.gov/apis/food/enforcement/)—CC0, and an agent that checks before brokering is a real safety feature |
 | *"Has this recipient taken from us before?"* | Any persistence layer. Firestore is a natural fit and nothing in our stack covers it |
@@ -163,7 +163,7 @@ Start here. These are tested end to end:
 | Metro | Organizations | Households with no vehicle | Notes |
 |---|---:|---:|---|
 | **New York** | 363 | 45% | Highest no-vehicle rate in the country. Also the biggest: 363 organizations and 2,565 tracts, so every step takes longer |
-| **Philadelphia** | 106 | 22% | Also has real published operational profiles |
+| **Philadelphia** | 106 | 22% | |
 | **Chicago** | 183 | 20% | The notebook default |
 | **Atlanta** | 126 | 13% | |
 | **Seattle** | 114 | 7% | Has **real** published operational profiles you can compare our generated ones against |
@@ -177,8 +177,8 @@ access is what makes food access different from plain poverty—if the nearest f
 store is three miles away, having no car is what turns a tight budget into an empty
 refrigerator.
 
-Notice that the list splits into two groups rather than sliding smoothly. Four metros sit at
-20% and above; five sit at 13% and below, four of those clustered at 5–7%. In the second group
+Notice that the list splits into two groups rather than sliding smoothly. Three metros sit at
+20% and above; six sit at 13% and below, five of those clustered at 5–7%. In the second group
 almost everybody drives, so vehicle access barely separates one neighborhood from another and
 your equity audit quietly collapses into "is this area poor"—which you could have measured with
 income alone. That does not make those metros wrong. It makes them a harder place to find
@@ -334,7 +334,7 @@ your demo looks like everyone else's, so read it before you write code rather th
 Running the notebook takes a few minutes, so that is emphatically *not* the job. This lane owns
 everything between raw tables and a match query the agent can call:
 
-- **Build the embeddings.** `AI.EMBED` over `recipients.profile_text`, materialised into a
+- **Build the embeddings.** `AI.EMBED` over `recipients.profile_text`, materialized into a
   table. **Do this first**—the agent lane is blocked until it exists. This is the equivalent of
   training a model in other challenges: it's an *input* to the agent, not a step 4.
 - **Decide what text to embed.** We embed `profile_text`. Should you? Would folding in capacity
@@ -546,7 +546,9 @@ its own. Review before you accept—it's fast, which is exactly why it's worth r
 **Read the text between the cells.** Several explanations will save you time later, and one of
 them—which half of the recipient data is real—is something judges will ask you about directly.
 
-**If the notebook won't run**, there's a headless fallback. From the repo root in Cloud Shell:
+**If the notebook won't run**, or a federal data server starts refusing the room (150 people hitting
+one endpoint in ten minutes looks like an attack to some of them), there's a headless fallback. The
+snapshot already has everything the notebook pulls. From the repo root in Cloud Shell:
 
 ```bash
 bash scripts/load.sh chicago
@@ -572,7 +574,7 @@ Four tables in your project, in a dataset called `a4i_food`:
 
 | Table | What it is |
 |---|---|
-| `recipients` | Every food-capable organization in your metro—typically 150–400—with profiles, storage, capacity, pickup constraints, and each organization's **real reported revenue** |
+| `recipients` | Every food-capable organization in your metro—between about 115 and 375 across the nine tested metros, including nine planted teaching cases—with profiles, storage, capacity, pickup constraints, and each organization's **real reported income** |
 | `surplus_postings` | Ten surplus offers across the three tracks—your query side |
 | `shelf_life` | USDA shelf life for 661 products, in hours |
 | `tract_demographics` | Poverty, vehicle access, and assistance rates by census tract |
@@ -587,24 +589,22 @@ Four tables in your project, in a dataset called `a4i_food`:
 File**—1.98 million tax-exempt organizations, published monthly by the federal government, in
 the public domain under 17 U.S.C. § 105. We filter to the NTEE codes that identify food banks,
 pantries, soup kitchens, nutrition sites, shelters, and community clinics. Real names, real
-addresses, real classification, and each organization's **real reported annual revenue**.
+addresses, real classification, and each organization's **real reported income**.
 
 **The operational details are generated, and they had to be.** Whether a pantry has a walk-in
 cooler, how many pallets they can take, when they can collect—**none of that is public for any
 organization in the United States.** It isn't hidden; nobody has ever collected it centrally.
 
 So we generate it, and the notebook shows you exactly how: fourteen archetypes, phrasing modeled
-on **real** published profiles from Seattle/King County and Pennsylvania (both public domain),
-Their reported revenue does real work here rather than just sitting in a column: it places each
+on **real** published profiles from Seattle/King County (public domain) and Pennsylvania (US
+Government Works), and generation seeded from each organization's tax ID so the same organization
+always produces the same profile for every team.
+
+Their reported income does real work here rather than just sitting in a column: it places each
 organization inside its archetype's range, so a regional operation and a storefront pantry come
 out at genuinely different scales instead of drawing from the same dice. Roughly a third of them
 report a figure—the rest file a postcard return that carries none, which we treat as *unknown*
 rather than as *small*, because those are different things.
-
-The rest is generated, and the notebook shows you exactly how: fourteen archetypes, phrasing
-modeled on **real** published profiles from Seattle/King County and Pennsylvania (both public
-domain), and generation seeded from each organization's tax ID so the same organization always produces
-the same profile for every team.
 
 **The clock is real.** USDA FSIS **FoodKeeper**, CC0, pinned in `data/`—661 products with shelf life by storage
 state. Worth knowing its limits: it's consumer home-storage guidance for freshness and quality,
@@ -830,7 +830,7 @@ consumer guidance, not cold-chain science. Locations are ZIP-level, not geocoded
 volunteers its limitations shows more skill than one that oversells—and judges are told to
 reward it.
 
-One warning worth internalising: **if your top match is always right, you probably aren't
+One warning worth internalizing: **if your top match is always right, you probably aren't
 filtering.** There is at least one organization in your corpus that semantically looks perfect
 and physically cannot store the food. If you never notice it, your pipeline isn't doing the
 work—and a judge who asks "show me a case where the search was wrong" will find it in a minute.
