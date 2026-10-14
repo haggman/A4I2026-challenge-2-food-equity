@@ -19,4 +19,4 @@ interrupting it breaks nothing.
 
 **Use the notebook if you can.** This script gets you the tables without the teaching, and one
 piece of that teaching—which half of the recipient data is real and which half is generated—is
-something judges will ask you about directly.
+something judges look for directly.

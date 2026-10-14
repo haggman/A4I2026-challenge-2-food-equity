@@ -13,8 +13,8 @@
 #     bash scripts/load.sh --list         # show available metros
 #
 # You still want the notebook if you can run it. It explains which half of the
-# recipient data is real and which half we generated, and you will be asked
-# about that. This script gets you the same tables without the teaching.
+# recipient data is real and which half we generated, and judges look for
+# that. This script gets you the same tables without the teaching.
 
 set -euo pipefail
 
@@ -207,7 +207,7 @@ echo "  Safe to re-run at any time - each load replaces the whole table."
 echo
 echo "  IMPORTANT: the organizations in 'recipients' are real (IRS Exempt"
 echo "  Organizations file). Their operational details are generated. The"
-echo "  notebook explains which is which, and judges will ask you."
+echo "  notebook explains which is which, and judges look for it."
 echo
 echo "  Next: embed recipients.profile_text with AI.EMBED, then VECTOR_SEARCH it."
 echo "  See Section 14 of notebooks/c2_01_load_explore.ipynb for the query shape and the"

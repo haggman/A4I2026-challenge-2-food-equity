@@ -46,7 +46,7 @@ what each of you needs in the first fifteen minutes.
 | **Data lane** | [Step 4, load the data](#step-4load-the-data) · [What you'll have](#what-youll-have) | [The data, and why we chose it](#the-data-and-why-we-chose-it) · Section 13 of the notebook |
 | **Agent lane** | [What you're building](#what-youre-building) · [The technology](#the-technology-youll-use) | [`agent/README.md`](agent/) · [Questions that need more than we gave you](#questions-that-need-more-than-we-gave-you) |
 | **Front end lane** | [Front end lane](#front-end-lane2-people) | [Your output artifact](#your-output-artifact-the-match-brief) |
-| **Story lane** | [Your output artifact](#your-output-artifact-the-match-brief) | [The data](#the-data-and-why-we-chose-it)—which half is real, because you will be asked |
+| **Story lane** | [Your output artifact](#your-output-artifact-the-match-brief) | [The data](#the-data-and-why-we-chose-it)—which half is real, because judges check |
 
 **Three things everybody should know by the end of hour one**, whatever lane you are in:
 
