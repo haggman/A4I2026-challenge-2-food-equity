@@ -468,10 +468,11 @@ Antigravity CLI already installed. Nothing to set up on your laptop, no admin ri
    project, in *this* browser session. Typing a URL can land you in a different window signed in
    as a different account, which is a confusing twenty minutes nobody needs.
 
-2. Clone your team's repository:
+2. Clone your team's repository and move into it:
 
    ```bash
    git clone https://github.com/YOUR-TEAM/YOUR-REPO.git
+   cd YOUR-REPO
    ```
 
 3. Open the whole repo in the editor:
