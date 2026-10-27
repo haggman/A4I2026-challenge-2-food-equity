@@ -1,0 +1,127 @@
+sources:
+  a4i_bigquery:
+    kind: bigquery
+    project: qwiklabs-gcp-04-ef48e08bc216
+    location: US
+
+tools:
+  vector_search_recipients:
+    kind: bigquery-sql
+    source: a4i_bigquery
+    description: >
+      Semantic vector search over a4i_food.recipient_embeddings using gemini-embedding-2
+      and COSINE distance with brute-force search. Returns candidate recipient organizations
+      in Atlanta along with their storage, pallet capacity, pickup windows, and profile text.
+    parameters:
+      - name: posting_text
+        type: string
+        description: The raw surplus food posting text from the donor or grocer.
+      - name: top_k
+        type: integer
+        description: Number of semantic candidate rows to retrieve (e.g., 20).
+    statement: |
+      SELECT
+        base.recipient_id,
+        base.name,
+        base.street,
+        base.city,
+        base.zip_code,
+        base.archetype_label,
+        base.profile_source,
+        base.cold_storage,
+        base.frozen_storage,
+        base.loading_dock,
+        base.refrigerated_transport,
+        base.max_pallets,
+        base.pickup_window_hours,
+        base.service_days,
+        base.weekly_households,
+        base.populations_served,
+        base.latitude,
+        base.longitude,
+        base.profile_text,
+        ROUND(distance, 4) AS distance
+      FROM VECTOR_SEARCH(
+        TABLE `a4i_food.recipient_embeddings`, 'embedding',
+        (SELECT AI.EMBED(@posting_text, endpoint => 'gemini-embedding-2').result AS embedding),
+        top_k => @top_k,
+        distance_type => 'COSINE',
+        options => '{"use_brute_force": true}'
+      )
+      ORDER BY distance;
+
+  lookup_foodkeeper_shelf_life:
+    kind: bigquery-sql
+    source: a4i_bigquery
+    description: >
+      Search USDA FSIS FoodKeeper shelf-life guidance in a4i_food.shelf_life across
+      product_name, product_subtitle, and keywords.
+    parameters:
+      - name: search_term
+        type: string
+        description: Food item keyword (e.g., spinach, milk, bread, leftovers).
+    statement: |
+      SELECT
+        product_id,
+        product_name,
+        product_subtitle,
+        keywords,
+        category,
+        refrigerated_hours,
+        refrigerated_note,
+        pantry_hours,
+        pantry_note
+      FROM `a4i_food.shelf_life`
+      WHERE LOWER(product_name) LIKE CONCAT('%', LOWER(@search_term), '%')
+         OR LOWER(IFNULL(product_subtitle, '')) LIKE CONCAT('%', LOWER(@search_term), '%')
+         OR LOWER(IFNULL(keywords, '')) LIKE CONCAT('%', LOWER(@search_term), '%')
+      LIMIT 10;
+
+  query_recipient_tract_demographics:
+    kind: bigquery-sql
+    source: a4i_bigquery
+    description: >
+      Find the nearest ACS Census Tract in a4i_food.tract_demographics for a given
+      Atlanta recipient organization name and compare against Atlanta metro averages.
+    parameters:
+      - name: recipient_name
+        type: string
+        description: Name (or partial name) of the recipient organization in Atlanta.
+    statement: |
+      WITH metro AS (
+        SELECT
+          ROUND(AVG(poverty_rate), 4) AS metro_poverty_rate,
+          ROUND(AVG(no_vehicle_rate), 4) AS metro_no_vehicle_rate,
+          ROUND(AVG(assistance_rate), 4) AS metro_assistance_rate
+        FROM `a4i_food.tract_demographics`
+      )
+      SELECT
+        r.recipient_id,
+        r.name,
+        r.cold_storage,
+        r.max_pallets,
+        t.geo_id AS tract_geo_id,
+        ROUND(t.poverty_rate, 4) AS poverty_rate,
+        ROUND(t.no_vehicle_rate, 4) AS no_vehicle_rate,
+        ROUND(t.assistance_rate, 4) AS assistance_rate,
+        m.metro_poverty_rate,
+        m.metro_no_vehicle_rate,
+        m.metro_assistance_rate
+      FROM `a4i_food.recipients` r
+      CROSS JOIN `a4i_food.tract_demographics` t
+      CROSS JOIN metro m
+      WHERE LOWER(r.name) LIKE CONCAT('%', LOWER(@recipient_name), '%')
+      QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY r.recipient_id
+        ORDER BY ST_DISTANCE(
+          ST_GEOGPOINT(r.longitude, r.latitude),
+          ST_GEOGPOINT(t.tract_lon, t.tract_lat)
+        ) ASC
+      ) = 1
+      LIMIT 5;
+
+toolsets:
+  a4i_food_broker_toolset:
+    - vector_search_recipients
+    - lookup_foodkeeper_shelf_life
+    - query_recipient_tract_demographics
